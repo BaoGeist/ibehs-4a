@@ -84,7 +84,7 @@ Baoze Lin, Hady Ibrahim
 
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/figure22.png}
+    \includegraphics[width=\textwidth]{Figures/figure22.png}
     \caption{Temperature and Furnace Input Over Time}
     \label{fig:figure22} 
   \end{figure}
@@ -110,6 +110,19 @@ Baoze Lin, Hady Ibrahim
   \[
   \text{Volume of gas consumed} = \frac{t_{\text{on}} Q_{f,\text{on}}}{\rho_e e} = \frac{\text{hour} \cdot \frac{\text{cal}}{\text{hour}}}{\frac{\text{cal}}{\text{m}^3}} = \text{m}^3
   \]
+
+  % ANSWER TO 2.4
+  \item
+  With a new oscillating defintion of Ta, we get Figure 2 below demonstrating the temperature and furnace input over time.
+
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/figure24.png}
+    \caption{Temperature and Furnace Input Over Time}
+    \label{fig:figure24}
+  \end{figure}
+
+  The simulation results align with the expected behavior of the system. The room temperature \( T(t) \) is maintained within the desired range of \( 17^\circ \text{C} \) to \( 23^\circ \text{C} \) as the furnace responds to changes in the ambient temperature \( T_a(t) \). When \( T_a(t) \) is lower, the furnace operates more frequently to offset increased heat loss, while at higher \( T_a(t) \), the furnace operates less often due to reduced heat loss. This behavior reflects the thermal dynamics of the system and the influence of the bang-bang control logic.
 
 
   \end{enumerate}
