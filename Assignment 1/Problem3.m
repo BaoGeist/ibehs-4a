@@ -6,8 +6,8 @@ L = 2;              % Inductance
 V = 5;
 
 % Use ODE45
-tspan = [0 5];
-i0 = 0
+tspan = 0:0.001:0.5;
+i0 = 0;
 ode_function = @(t, i) (V - R * i) / L;
 [t,i] = ode45(ode_function, tspan, i0);
 
@@ -22,7 +22,7 @@ grid on;
 saveas(gcf, 'Figures/figure32.png');
 
 %% Question 3.3
-tspan = [0 5]; 
+tspan = 0:0.001:0.5;
 i0 = 0;
 
 % Original 
@@ -89,7 +89,7 @@ grid on;
 saveas(gcf, 'Figures/figure33.png');
 
 
-%% Question 3.4
+%% Question 3.4 - Verifying Linearity
 % Parameters
 R = 50;          % Resistance
 L = 2;           % Inductance
@@ -137,3 +137,41 @@ grid on;
 % Save the figure
 saveas(gcf, 'Figures/figure34.png');
 
+%% Question 3.4 - Verifying Time-Invariance
+% Parameters
+R = 50;          % Resistance
+L = 2;           % Inductance
+V = 5;          % Constant input voltage
+i0 = 0;          % Initial current
+tspan = 0:0.001:0.5;  % Original time span
+
+% Original System Response
+ode_function_original = @(t, i) (V - R * i) / L;
+[t_original, i_original] = ode45(ode_function_original, tspan, i0);
+
+% Time-Shifted System (Delay by td)
+td = 0.1;  % Time delay in seconds
+tspan_shifted = tspan + td;  % Shift time span
+
+% System with Time-Shifted Input
+ode_function_shifted = @(t, i) (V - R * i) / L;
+[t_shifted, i_shifted] = ode45(ode_function_shifted, tspan_shifted, i0);
+
+% Time-Shift Original Output by td
+i_original_delayed = interp1(t_original, i_original, t_shifted - td, 'linear');
+
+% Plotting
+figure;
+hold on;
+plot(t_original, i_original, 'b', 'LineWidth', 1.5);  % Original output
+plot(t_shifted, i_shifted, 'r--', 'LineWidth', 1.5);  % Shifted output
+plot(t_shifted, i_original_delayed, 'g:', 'LineWidth', 1.5);  % Interpolated original
+
+xlabel('Time (s)');
+ylabel('Current i(t) (A)');
+title('Time-Invariance Check');
+legend('Original Response', 'Shifted Input Response', 'Original Response Shifted', 'Location', 'Best');
+grid on;
+
+% Save the figure
+saveas(gcf, 'Figures/figure35.png');
