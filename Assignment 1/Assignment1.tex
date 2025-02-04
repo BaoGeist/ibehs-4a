@@ -5,7 +5,7 @@
 \setlength{\parindent}{0in}
 \setlength{\parskip}{\baselineskip}
 
-\usepackage{amsmath,amsfonts,amssymb,graphicx, hyperref}
+\usepackage{amsmath,amsfonts,amssymb,graphicx, hyperref, float}
 
 \title{Your Project Title}
 
@@ -82,7 +82,7 @@ Baoze Lin, Hady Ibrahim
   \end{cases}
   \]
 
-  \begin{figure}[h!]
+  \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/figure22.png}
     \caption{Temperature and Furnace Input Over Time}
@@ -115,7 +115,7 @@ Baoze Lin, Hady Ibrahim
   \item
   With a new oscillating defintion of Ta, we get Figure 2 below demonstrating the temperature and furnace input over time.
 
-  \begin{figure}[h!]
+  \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/figure24.png}
     \caption{Temperature and Furnace Input Over Time}
@@ -157,15 +157,29 @@ Baoze Lin, Hady Ibrahim
   \item 
     I don't remember how to use ode45, so I referenced [1] to get started. The results of the Matlab code was plotted below in Figure 3.
 
-    \begin{figure}[h!]
+    \begin{figure}[H]
       \centering
       \includegraphics[width=\textwidth]{Figures/figure32.png}
       \caption{Current Over Time}
       \label{fig:figure32}
     \end{figure}
-  \item 
 
-  SOLUTION
+  % ANSWER TO 3.3
+  \item 
+    
+    \[
+    V_s(t) = Ri(t) + L\frac{di(t)}{dt}
+    \]
+  
+    Based on the ODE above, inductance $L$ should have no effect on the steady state current $i(t)$ because the derivative of $i(t)$ with respect to time is zero, and inductance is a coeffecient on the derivative. This means that the inductance $L$ term in the ODE will not affect the current $i(t)$ when the system reaches steady state, and the current $i(t)$ will be determined solely by the voltage source $V_s(t)$ and the resistance $R$ in the circuit. This can be seen below in Figure 4, where changing R causes the steady state current $i(t)$ to change, while changing L has no effect on the steady state current $i(t)$.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=\textwidth]{Figures/figure33.png}
+      \caption{Current Over Time}
+      \label{fig:figure33}
+    \end{figure}
+  
   \end{enumerate}
 \newpage
 
