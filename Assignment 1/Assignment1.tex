@@ -5,7 +5,7 @@
 \setlength{\parindent}{0in}
 \setlength{\parskip}{\baselineskip}
 
-\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsmath,amsfonts,amssymb,graphicx}
 
 \title{Your Project Title}
 
@@ -70,9 +70,25 @@ Baoze Lin, Hady Ibrahim
   \]
 
   % ANSWER TO 2.2
-  \item Part B  % This will appear as "2.2"
+  \item 
+    Using the dervied equation for \( T(t) \), the behaviour of the furnace as defined below, and the given definition of one step of the univariate Euler's method, we can plot Figure 1.
 
-  SOLUTION
+  \[
+  Q_f(t) =
+  \begin{cases} 
+  0 & \text{When } T(t) > 23^\circ \text{C}, \\
+  1.5 \times 10^6 & \text{When } T(t) < 17^\circ \text{C}, \\
+  \text{unchanged} & \text{For all } 17 \leq T(t) \leq 23^\circ \text{C}.
+  \end{cases}
+  \]
+
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/figure21.png}
+    \caption{Temperature and Furnace Input Over Time}
+    \label{fig:figure21} 
+  \end{figure}
+
   \end{enumerate}
 \newpage
 
