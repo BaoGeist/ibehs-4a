@@ -126,13 +126,34 @@ Baoze Lin, Hady Ibrahim
 
 
   \end{enumerate}
-\newpage
+
+  \pagebreak
 
 \item Question 3
   \begin{enumerate}
-  \item Part A  % This will appear as "3.1"
+  % ANSWER TO 3.1
+  \item 
+    We are given the following ODE describing the current going thorugh the system.
 
-  SOLUTION
+    \[
+    V_s(t) = Ri(t) + L\frac{di(t)}{dt}
+    \]
+
+    During steady state, the current \( i(t) \) is constant, so the derivative of \( i(t) \) with respect to time is zero. Substituting this into the ODE:
+
+    \[
+    V_s(t) = Ri(t) + L(0)
+    \]
+
+    Rearranging, we get the following equation for $i(t)$:
+
+    \[
+    i(t) = \frac{V_s(t)}{R}
+    \]
+
+    This is useful when designing a cirtcuit with a target current i(t) because you can control the voltage source to achieve the desired current while the resistance will always be a constant property of the circuit's hardware. 
+
+  
 
   \item Part B  % This will appear as "3.2"
 
