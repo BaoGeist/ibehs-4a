@@ -90,3 +90,50 @@ saveas(gcf, 'Figures/figure33.png');
 
 
 %% Question 3.4
+% Parameters
+R = 50;          % Resistance
+L = 2;           % Inductance
+i0 = 0;          
+tspan = [0 5];   
+
+% Vs1 Scenario
+Vs1 = 5; 
+ode_function5 = @(t, i) (Vs1 - R * i) / L;
+[t1, i1] = ode45(ode_function5, tspan, i0);
+
+% Vs2 Scenario
+Vs2 = 10; 
+ode_function6 = @(t, i) (Vs2 - R * i) / L;
+[t2, i2] = ode45(ode_function6, tspan, i0);
+
+% Vs3 Scenario
+Vs3 = 15; 
+ode_function7 = @(t, i) (Vs3 - R * i) / L;
+[t3, i3] = ode45(ode_function7, tspan, i0);
+
+% Interpolate i2 onto t1 so they have the same size
+i2_interp = interp1(t2, i2, t1, 'linear');
+
+% Compute the sum of i1(t) and i2(t) with matching sizes
+i_sum = i1 + i2_interp;
+
+% Interpolate i3 onto t1 for a fair comparison
+i3_interp = interp1(t3, i3, t1, 'linear');
+
+% Plot 
+figure;
+
+plot(t1, i3_interp, 'b-', 'LineWidth', 1.5); 
+hold on;
+
+plot(t1, i_sum, 'ro', 'LineWidth', 1.5, 'MarkerSize', 4); 
+
+xlabel('Time (s)');
+ylabel('Current (A)');
+title('Comparison of i_3(t) and i_1(t) + i_2(t)');
+legend('i_3(t)', 'i_1(t) + i_2(t)', 'Location', 'Best');
+grid on;
+
+% Save the figure
+saveas(gcf, 'Figures/figure34.png');
+
