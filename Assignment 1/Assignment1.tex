@@ -84,10 +84,33 @@ Baoze Lin, Hady Ibrahim
 
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/figure21.png}
+    \includegraphics[width=0.8\textwidth]{Figures/figure22.png}
     \caption{Temperature and Furnace Input Over Time}
-    \label{fig:figure21} 
+    \label{fig:figure22} 
   \end{figure}
+
+  % ANSWER TO 2.3
+  \item 
+  To calculate the number of standard cubic meters of natural gas consumed, we follow the below equation:
+
+  Define $t_{on} \triangleq$  time the furnace was on in hours. The Matlab code says it was 1.182 hours\\
+  Define $Q_{f,on} \triangleq$ as the furnace heat input. \\
+  Define $\rho_e \triangleq$ as the energy density. \\
+  Define $e \triangleq$ as the efficiency. \\
+
+  \[
+  \text{Volume of gas consumed} = \frac{t_{on} Q_{f,\text{on}}}{\rho_e e} = \frac{(1.182)(1.5 \times 10^6)}{(9 \times 10^6)(0.9)} = 0.2188888
+  \]
+  \[
+  \approx 0.219 \, \text{standard cubic meters}
+  \]
+
+  We also confirm with unit analysis that we get cubic meters.
+
+  \[
+  \text{Volume of gas consumed} = \frac{t_{\text{on}} Q_{f,\text{on}}}{\rho_e e} = \frac{\text{hour} \cdot \frac{\text{cal}}{\text{hour}}}{\frac{\text{cal}}{\text{m}^3}} = \text{m}^3
+  \]
+
 
   \end{enumerate}
 \newpage

@@ -40,7 +40,8 @@ for n = 1:N-1
     T(n+1) = T(n) + dt * dTdt;
 end
 
-% Plot results
+% Question 2.2
+% Plot
 figure;
 
 subplot(2, 1, 1);
@@ -57,4 +58,8 @@ ylabel('Qf(t) (cal/h)');
 title('Furnace Heat Input vs Time');
 grid on;
 
+% Question 2.3
+furnace_on_indices = Qf == Qf_on;
+t_On = sum(furnace_on_indices) * dt;
+fprintf('The furnace was ON for %.3f hours.\n', t_On);
 
