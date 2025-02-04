@@ -1,57 +1,116 @@
-\documentclass[12pt,letterpaper, onecolumn]{exam}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage[lmargin=71pt, tmargin=1.2in]{geometry}  %For centering solution box
-\lhead{Leaft Header\\}
-\rhead{Right Header\\}
-% \chead{\hline} % Un-comment to draw line below header
-\thispagestyle{empty}   %For removing header/footer from page 1
+\documentclass[12pt]{article}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parindent}{0in}
+\setlength{\parskip}{\baselineskip}
+
+\usepackage{amsmath,amsfonts,amssymb}
+
+\title{Your Project Title}
 
 \begin{document}
 
-\begingroup  
-    \centering
-    \LARGE Subject\\
-    \LARGE Assignment Number\\[0.5em]
-    \large \today\\[0.5em]
-    \large Author\par
-    \large Roll Number\par
-    \large Class/Batch/Section\par
-\endgroup
-\rule{\textwidth}{0.4pt}
-\pointsdroppedatright   %Self-explanatory
-\printanswers
-\renewcommand{\solutiontitle}{\noindent\textbf{Ans:}\enspace}   %Replace "Ans:" with starting keyword in solution box
+IBEHS 4A03 \hfill Assignment \#1\\
+Baoze Lin, Hady Ibrahim
 
-\begin{questions}
+\hrulefill
 
-    \question[1 Mark] Q1?\droppoints
-    
-    \begin{solution}
-            A1.
-    \end{solution}
-    
-    \question[2 Marks] Q2?
-    \begin{parts}
-        \part Part. a
-        \part Hint: These can be nested further\droppoints
-    \end{parts}
-    
-    \begin{solution}
-            A2.
-        \begin{parts}
-            \part Ans. for (a)
-            \part Solution for (b)
-        \end{parts}
-    \end{solution}
+% Custom numbering for subparts (e.g., 2.1, 2.2)
+\renewcommand{\theenumii}{\arabic{enumi}.\arabic{enumii}}
 
-    \pagebreak %Not necessary
-    
-    \question[Type anything here] Q3?\droppoints
-    
-    \begin{solution}
-            A3.
-    \end{solution}
-    
-\end{questions}
+\begin{enumerate}
+\item Question 1
+  \begin{enumerate}
+  % ANSWER TO 1.1
+  \item yapyapyap
+
+  \end{enumerate}
+\newpage
+
+\item Question 2
+  \begin{enumerate}
+  % ANSWER TO 2.1
+  \item 
+
+  The ordinary differential equation (ODE) governing the temperature \( T(t) \) is:
+
+  \[
+  \frac{dT(t)}{dt} = \frac{Q_f(t) - UA(T(t) - T_a)}{\rho V c_p}
+  \]
+
+  For this problem, the furnace is off, so \( Q_f(t) = 0 \). Substituting this into the equation:
+
+  \[
+  \frac{dT(t)}{dt} = \frac{-UA(T(t) - T_a)}{\rho V c_p}
+  \]
+
+  At steady state, the temperature \( T(t) \) no longer changes with time, so:
+
+  \[
+  \frac{dT(t)}{dt} = 0
+  \]
+
+  Substitute this condition into the ODE:
+
+  \[
+  0 = \frac{-UA(T(t) - T_a)}{\rho V c_p}
+  \]
+
+  Solve:
+
+  \[
+  T(t) - T_a = 0
+  \]
+
+  Thus:
+
+  \[
+  T(t) = T_a
+  \]
+
+  % ANSWER TO 2.2
+  \item Part B  % This will appear as "2.2"
+
+  SOLUTION
+  \end{enumerate}
+\newpage
+
+\item Question 3
+  \begin{enumerate}
+  \item Part A  % This will appear as "3.1"
+
+  SOLUTION
+
+  \item Part B  % This will appear as "3.2"
+
+  SOLUTION
+  \end{enumerate}
+\newpage
+
+\item Question 4
+  \begin{enumerate}
+  \item Part A  % This will appear as "4.1"
+
+  SOLUTION
+
+  \item Part B  % This will appear as "4.2"
+
+  SOLUTION
+  \end{enumerate}
+\newpage
+
+\item Question 5
+  \begin{enumerate}
+  \item Part A  % This will appear as "5.1"
+
+  SOLUTION
+
+  \item Part B  % This will appear as "5.2"
+
+  SOLUTION
+  \end{enumerate}
+\newpage
+
+\end{enumerate}
 \end{document}
