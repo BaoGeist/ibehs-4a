@@ -5,7 +5,7 @@
 \setlength{\parindent}{0in}
 \setlength{\parskip}{\baselineskip}
 
-\usepackage{amsmath,amsfonts,amssymb,graphicx}
+\usepackage{amsmath,amsfonts,amssymb,graphicx, hyperref}
 
 \title{Your Project Title}
 
@@ -153,9 +153,17 @@ Baoze Lin, Hady Ibrahim
 
     This is useful when designing a cirtcuit with a target current i(t) because you can control the voltage source to achieve the desired current while the resistance will always be a constant property of the circuit's hardware. 
 
-  
+  % ANSWER TO 3.2
+  \item 
+    I don't remember how to use ode45, so I referenced [1] to get started. The results of the Matlab code was plotted below in Figure 3.
 
-  \item Part B  % This will appear as "3.2"
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\textwidth]{Figures/figure32.png}
+      \caption{Current Over Time}
+      \label{fig:figure32}
+    \end{figure}
+  \item 
 
   SOLUTION
   \end{enumerate}
@@ -186,4 +194,13 @@ Baoze Lin, Hady Ibrahim
 \newpage
 
 \end{enumerate}
+
+\pagebreak
+
+\begin{thebibliography}{9}
+  \bibitem{matlab_ode45}
+  MATLAB Documentation: \texttt{ode45}. Available at: 
+  \url{https://www.mathworks.com/help/matlab/ref/ode45.html}.
+\end{thebibliography}
+
 \end{document}
