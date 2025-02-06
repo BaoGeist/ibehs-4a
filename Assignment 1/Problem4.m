@@ -89,10 +89,10 @@ tspan = 0:0.001:40;
 
 % Define the ODE system with vaccine rollout
 sirv_vaccine_odes = @(t, y) [
-    (t >= 5) * (1 - epsilon * p) * mu * N - beta * y(1) * y(2) - mu * y(1);     % dS/dt, S(t) = y(1)
+    (1 - (t >= 5) * epsilon * p) * mu * N - beta * y(1) * y(2) - mu * y(1);     % dS/dt, S(t) = y(1)
     beta * y(1) * y(2) - gamma * y(2) - mu * y(2);                              % dI/dt, I(t) = y(2)
     gamma * y(2) - mu * y(3);                                                   % dR/dt, R(t) = y(3)
-    (t >= 5) * (epsilon * p * mu * N - mu * y(4))                                 % dV/dt, V(t) = y(4)
+    (t >= 5) * epsilon * p * mu * N - mu * y(4)                                 % dV/dt, V(t) = y(4)
 ];
 
 % Define the ODE system with vaccine rollout
