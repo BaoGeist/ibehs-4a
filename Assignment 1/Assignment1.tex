@@ -217,11 +217,217 @@ Baoze Lin, Hady Ibrahim
   \begin{enumerate}
   \item Part A  % This will appear as "5.1"
 
-  SOLUTION
+  We are given the second-order differential equation:
+  \[
+  2 \frac{d^2 x(t)}{dt^2} + 3 \frac{dx(t)}{dt} - 2 x(t) = t e^{-2t}
+  \]
+
+  Applying the Laplace transform to the differential equation:
+  \[
+  2 \big[ s^2 X(s) - s x(0) - \dot{x}(0) \big] + 3 \big[ s X(s) - x(0) \big] - 2 X(s) = \mathcal{L} \big( t e^{-2t} \big)
+  \]
+  Given initial conditions \( x(0) = 0 \) and \( \dot{x}(0) = -2 \), this simplifies to:
+  \[
+  2 \big[ s^2 X(s) + 2 \big] + 3 s X(s) - 2 X(s) = \frac{1}{(s + 2)^2}
+  \]
+  \[
+  2 s^2 X(s) + 4 + 3 s X(s) - 2 X(s) = \frac{1}{(s + 2)^2}
+  \]
+  \[
+  X(s) \big( 2 s^2 + 3 s - 2 \big) + 4 = \frac{1}{(s + 2)^2}
+  \]
+  \[
+  X(s) \big[(s + 2) (2s - 1) \big] + 4 = \frac{1}{(s + 2)^2}
+  \]
+  \[
+  X(s) = \frac{1 - 4 (s + 2)^2}{(s + 2)^3 (2s - 1)}
+  \]
 
   \item Part B  % This will appear as "5.2"
 
-  SOLUTION
+  \subsection*{Step 1: Partial Fraction Expansion}
+  We decompose \( X(s) \) as:
+  \[
+  X(s) = \frac{A}{s + 2} + \frac{B}{(s + 2)^2} + \frac{C}{(s + 2)^3} + \frac{D}{2s - 1}
+  \]
+  Multiply through by the common denominator \( (s + 2)^3 (2s - 1) \):
+  \[
+  1 - 4 (s + 2)^2 = (s + 2)^2 (2s - 1) A + (s + 2) (2s - 1) B + (2s - 1) C + (s + 2)^3 D
+  \]
+
+  \subsection*{Step 2: Determine the Coefficients}
+  To find \( A \), \( B \), \( C \), and \( D \), we use strategic substitutions for \( s \) and equate coefficients:
+
+  1. Substitute \( s = -2 \):
+  \[
+  1 - 4 (s + 2)^2 = 0 \Rightarrow C = -\frac{1}{5}
+  \]
+
+  2. Substitute \( s = \frac{1}{2} \):
+  \[
+  D = -\frac{192}{125}
+  \]
+
+  3. Substitute \( s = 0 \):
+  \[
+  A = \frac{96}{125}
+  \]
+
+  4. Substitute \( s = 1 \):
+  \[
+  B = -\frac{2}{25}
+  \]
+
+
+  To find \( A \), \( B \), \( C \), and \( D \), we substitute strategic values of \( s \) and equate coefficients of powers of \( s \).
+
+  \subsubsection*{1. Substitute \( s = -2 \) to find \( C \)}
+  \[
+  1 - 4(s + 2)^2 = (s + 2)^2 (2s - 1) A + (s + 2) (2s - 1) B + (2s - 1) C + (s + 2)^3 D
+  \]
+  When \( s = -2 \):
+  \[
+  s + 2 = 0 \quad \Rightarrow \quad (s + 2)^2 = 0 \quad \text{and} \quad (s + 2)^3 = 0
+  \]
+  This simplifies the equation to:
+  \[
+  (2s - 1) C = 1 - 4(0)
+  \]
+  At \( s = -2 \), \( 2(-2) - 1 = -5 \), so:
+  \[
+  -5 C = 1 \quad \Rightarrow \quad C = -\frac{1}{5}
+  \]
+
+  \subsubsection*{2. Substitute \( s = \frac{1}{2} \) to find \( D \)}
+  When \( s = \frac{1}{2} \):
+  \[
+  2s - 1 = 0 \quad \Rightarrow \quad (2s - 1) = 0
+  \]
+  \[
+  (s + 2)^3 D = 1 - 4 \bigg( \frac{5}{2} \bigg)^2
+  \]
+  \[
+  s + 2 = \frac{1}{2} + 2 = \frac{5}{2}
+  \]
+  \[
+  1 - 4 \bigg( \frac{5}{2} \bigg)^2 = 1 - 4 \cdot \frac{25}{4} = 1 - 25 = -24
+  \]
+  \[
+  \bigg( \frac{5}{2} \bigg)^3 D = -24 \quad \Rightarrow \quad \frac{125}{8} D = -24
+  \]
+  \[
+  D = -\frac{24 \cdot 8}{125} = -\frac{192}{125}
+  \]
+
+  \subsubsection*{3. Substitute \( s = 0 \) to find \( A \)}
+  When \( s = 0 \):
+  \[
+  1 - 4 (s + 2)^2 = (s + 2)^2 (2s - 1) A + (s + 2) (2s - 1) B + (2s - 1) C + (s + 2)^3 D
+  \]
+  \[
+  s + 2 = 2 \quad \text{and} \quad 2s - 1 = -1
+  \]
+  \[
+  1 - 4(2)^2 = (2)^2 (-1) A + (2)(-1) B + (-1) C + (2)^3 D
+  \]
+  \[
+  1 - 16 = 4(-1) A - 2B - C + 8D
+  \]
+  \[
+  -15 = -4A - 2B - C + 8D
+  \]
+  Substitute \( C = -\frac{1}{5} \) and \( D = -\frac{192}{125} \):
+  \[
+  -15 = -4A - 2B - \bigg( -\frac{1}{5} \bigg) + 8 \bigg( -\frac{192}{125} \bigg)
+  \]
+  \[
+  -15 = -4A - 2B - \frac{307}{125}
+  \]
+  \[
+  -1568 = -500A - 250B
+  \]
+  \[
+  \frac{1568}{250} = 2A + B
+  \]
+  Simplify:
+  \[
+  \frac{784}{125} = 2A + B
+  \]
+
+  \subsubsection*{4. Substitute \( s = 1 \) to find the second equation for \( A \) and \( B \)}
+
+  When \( s = 1 \):
+  \[
+  1 - 4(s + 2)^2 = (s + 2)^2(2s - 1)A + (s + 2)(2s - 1)B + (2s - 1)C + (s + 2)^3D
+  \]
+  Substitute into the equation:
+  \[
+  1 - 4(3)^2 = (3)^2(1)A + (3)(1)B + (1)C + (3)^3D
+  \]
+  \[
+  -35 = 9A + 3B + C + 27D
+  \]
+  Substitute \( C = -\frac{1}{5} \) and \( D = -\frac{192}{125} \):
+  \[
+  -35 = 9A + 3B - \frac{1}{5} + 27 \bigg( -\frac{192}{125} \bigg)
+  \]
+  \[
+  -35 = 9A + 3B - \frac{5210}{125}
+  \]
+  \[
+  -\frac{167}{75} = 3A + B
+  \]
+
+  \subsubsection*{5. Solve the system of equations}
+  We have:
+  \[
+  2A + B = \frac{784}{125}
+  \]
+  \[
+  3A + B = -\frac{167}{75}
+  \]
+
+  Subtract the first equation from the second:
+  \[
+  (3A + B) - (2A + B) = -\frac{167}{75} - \frac{784}{125}
+  \]
+  \[
+  A = -\frac{2}{25}
+  \]
+
+  Substitute \( A = -\frac{2}{25} \) into \( 2A + B = \frac{784}{125} \):
+  \[
+  2 \bigg( -\frac{2}{25} \bigg) + B = \frac{784}{125}
+  \]
+  \[
+  B = \frac{784}{125} + \frac{4}{25} = -\frac{2}{25}
+  \]
+  These are the final values for the partial fraction:
+  \[
+  A = \frac{96}{125}, B = -\frac{2}{25}, C = -\frac{1}{5}, D = -\frac{192}{125}
+  \]
+
+  \subsection*{Step 3: Inverse Laplace Transform}
+  We now take the inverse Laplace transform of each term:
+  \[
+  X(s) = \frac{96}{125} \cdot \frac{1}{s + 2} - \frac{2}{25} \cdot \frac{1}{(s + 2)^2} - \frac{1}{5} \cdot \frac{1}{(s + 2)^3} - \frac{192}{125} \cdot \frac{1}{2s - 1}
+  \]
+
+  Using the Laplace table, performed the inverse Laplace and got the time domain solution:
+  \[
+  x(t) = \frac{96}{125} e^{-2t} - \frac{2}{25} t e^{-2t} - \frac{1}{10} t^2 e^{-2t} - \frac{192}{250} e^{t/2}
+  \]
+
+  \item Part C
+  As you can see in Figure 7 below, plotting both the numerical solution (using ode45) and the analytical solution (the time domain solution we solved in 5.2), they are equivalent over the time shown.
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/figure51.png}
+    \caption{Plotting the Numerical vs Analytical Solution}
+    \label{fig:figure51} 
+  \end{figure}
+
   \end{enumerate}
 \newpage
 
