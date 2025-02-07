@@ -166,21 +166,22 @@ pc = (1 - 1/R0) / epsilon;
 fprintf('Critical vaccination rate p_c: %.4f\n', pc);
 
 % Initial conditions
-S0 = (1 - pc) * N;  % Remaining susceptible population after critical vaccination
 I0 = 250;
 R0 = 0.85 * N;
 V0 = pc * N;  % Vaccinated population
+S0 = N - I0 - R0;  % Susceptible healthy people (Population without infected and recovered)
 
 % Time span
 tspan = 0:0.001:55;
 
 % Define the ODE system with critical vaccination rate
 sirv_critical_odes = @(t, y) [
-    (1 - epsilon * pc) * mu * N - beta * y(1) * y(2) - mu * y(1);    % dS/dt, S(t) = y(1)
-    beta * y(1) * y(2) - gamma * y(2) - mu * y(2);                  % dI/dt, I(t) = y(2)
-    gamma * y(2) - mu * y(3);                                       % dR/dt, R(t) = y(3)
-    epsilon * pc * mu * N - mu * y(4)                                % dV/dt, V(t) = y(4)
+    (1 - (t >= 5) * epsilon * pc) * mu * N - beta * y(1) * y(2) - mu * y(1);     % dS/dt, S(t) = y(1)
+    beta * y(1) * y(2) - gamma * y(2) - mu * y(2);                              % dI/dt, I(t) = y(2)
+    gamma * y(2) - mu * y(3);                                                   % dR/dt, R(t) = y(3)
+    (t >= 5) * epsilon * pc * mu * N - mu * y(4)                                 % dV/dt, V(t) = y(4)
 ];
+
 
 initial_conditions = [S0; I0; R0; V0];
 
