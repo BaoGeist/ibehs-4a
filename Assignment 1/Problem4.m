@@ -41,6 +41,7 @@ plot(t, S, 'b', 'LineWidth', 1.5);
 xlabel('Time (years)');
 ylabel('Susceptible Population');
 title('Susceptible Population Over Time');
+xticks(0:5:max(t));
 grid on;
 
 % Plot I(t) - Infected Population
@@ -49,6 +50,7 @@ plot(t, I, 'r', 'LineWidth', 1.5);
 xlabel('Time (years)');
 ylabel('Infected Population');
 title('Infected Population Over Time');
+xticks(0:5:max(t));
 grid on;
 
 % Plot R(t) - Recovered Population
@@ -57,6 +59,7 @@ plot(t, R, 'g', 'LineWidth', 1.5);
 xlabel('Time (years)');
 ylabel('Recovered Population');
 title('Recovered Population Over Time');
+xticks(0:5:max(t));
 grid on;
 
 % Plot V(t) - Vaccinated Population
@@ -65,6 +68,7 @@ plot(t, V, 'm', 'LineWidth', 1.5);
 xlabel('Time (years)');
 ylabel('Vaccinated Population');
 title('Vaccinated Population Over Time');
+xticks(0:5:max(t));
 grid on;
 % saveas(gcf, 'Figures/figure41.png'); Doesn't look good, need to resize
 % myself
@@ -95,14 +99,6 @@ sirv_vaccine_odes = @(t, y) [
     (t >= 5) * epsilon * p * mu * N - mu * y(4)                                 % dV/dt, V(t) = y(4)
 ];
 
-% Define the ODE system with vaccine rollout
-% sirv_vaccine_odes = @(t, y) [
-%     (1 - (t >= 5) * epsilon * p) * mu * N - beta * y(1) * y(2) - mu * y(1);     % dS/dt, S(t) = y(1)
-%     beta * y(1) * y(2) - gamma * y(2) - mu * y(2);                              % dI/dt, I(t) = y(2)
-%     gamma * y(2) - mu * y(3);                                                   % dR/dt, R(t) = y(3)
-%     (t >= 5) * epsilon * p * mu * N - mu * y(4)                                 % dV/dt, V(t) = y(4)
-% ];
-
 % Initial state vector
 initial_conditions = [S0; I0; R0; V0];
 
@@ -115,40 +111,15 @@ I = y(:, 2);
 R = y(:, 3);
 V = y(:, 4);
 
-% Plot S(t) - Susceptible Population
-figure;
-subplot(2, 2, 1);
-plot(t, S, 'b', 'LineWidth', 1.5);
-xlabel('Time (years)');
-ylabel('Susceptible Population');
-title('Susceptible Population Over Time');
-grid on;
-
 % Plot I(t) - Infected Population
-subplot(2, 2, 2);
+figure;
 plot(t, I, 'r', 'LineWidth', 1.5);
 xlabel('Time (years)');
 ylabel('Infected Population');
 title('Infected Population Over Time');
+xticks(0:5:max(t));
 grid on;
-
-% Plot R(t) - Recovered Population
-subplot(2, 2, 3);
-plot(t, R, 'g', 'LineWidth', 1.5);
-xlabel('Time (years)');
-ylabel('Recovered Population');
-title('Recovered Population Over Time');
-grid on;
-
-% Plot V(t) - Vaccinated Population
-subplot(2, 2, 4);
-plot(t, V, 'm', 'LineWidth', 1.5);
-xlabel('Time (years)');
-ylabel('Vaccinated Population');
-title('Vaccinated Population Over Time');
-grid on;
-% saveas(gcf, 'Figures/figure42.png'); Doesn't look good, need to resize
-% myself
+saveas(gcf, 'Figures/figure42.png');
 
 %% 4.3
 % Parameters
@@ -197,5 +168,6 @@ plot(t, I, 'r', 'LineWidth', 1.5);
 xlabel('Time (years)');
 ylabel('Infected Population');
 title('Infected Population Over Time (Eradication Scenario)');
+xticks(0:5:max(t));
 grid on;
 saveas(gcf, 'Figures/figure43.png');
