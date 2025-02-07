@@ -23,7 +23,20 @@ Baoze Lin, Hady Ibrahim
 \item Question 1
   \begin{enumerate}
   % ANSWER TO 1.1
-  \item yapyapyap
+  \item We have chosen to investigate the thermoregulation homeostasis control system, specifically the system's response to a decreased body temperature. In this case, the \textbf{state/measured variable} is body temperature, and it becomes a stimulus to the thermoregulation when it falls below a normal body temperature. The stimulus is sensed by thermoreceptors in the hypothalamus (\textbf{sensor}), which then sends nervous signals to skeletal muscles and peripheral blood vessels (\textbf{the effectors}). 
+    \\
+
+    The skeletal muscles then becomes active and generates heat through shivers, while the peripheral blood vessels constrict to reduce heat loss from the skin. The response of the system is to increase body temperature back to the normal range. The action of the peripheral blood vessels and skeletal muscles causes an \textbf{input} of increased temperature back into the system, changing the state of the measured variable. Hormonal thermogenesis may also cause an input in the sytem, as shown in Figure \ref{fig:figure11}.
+    \\
+    
+    This control system above can also be likened to general control systems, as presented in the "00\_4A\_Intro" lecture Slide 26, where the hypothalamus is the controller of this control loop, which then prescribes an input into the system through the skeletal muscles and peripheral blood vessels. It is form of a negative feedback loop.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.3\textwidth]{Figures/figure11.png}
+      \caption{Thermoregulation in Response to Cold Body Temperature Stimulus}
+      \label{fig:figure11} 
+    \end{figure}
 
   \end{enumerate}
 \newpage
@@ -71,7 +84,7 @@ Baoze Lin, Hady Ibrahim
 
   % ANSWER TO 2.2
   \item
-    Using the derived equation for \( T(t) \), the behaviour of the furnace as defined below, and the given definition of one step of the univariate Euler's method, we can plot Figure 1.
+    Using the derived equation for \( T(t) \), the behaviour of the furnace as defined below, and the given definition of one step of the univariate Euler's method, we can plot Figure \ref{fig:figure22}.
 
   \[
   Q_f(t) =
@@ -113,7 +126,7 @@ Baoze Lin, Hady Ibrahim
 
   % ANSWER TO 2.4
   \item
-  With a new oscillating defintion of Ta, we get Figure 2 below demonstrating the temperature and furnace input over time.
+  With a new oscillating defintion of Ta, we get Figure \ref{fig:figure24} below demonstrating the temperature and furnace input over time.
 
   \begin{figure}[H]
     \centering
@@ -155,7 +168,7 @@ Baoze Lin, Hady Ibrahim
 
   % ANSWER TO 3.2
   \item 
-    The results of the Matlab code was plotted below in Figure 3. You can see that it plateaus to a value of 0.1. We know $V_s(t)$ was defined as a constant $5 V$ and R as $50 \Omega$. We know the steady state is $\frac{V_s(t)}{R}$ which in this case would give us $0.1 A$, so we can see that the plot shows our steady state expression holds.
+    The results of the Matlab code was plotted below in Figure \ref{fig:figure32}. You can see that it plateaus to a value of 0.1. We know $V_s(t)$ was defined as a constant $5 V$ and R as $50 \Omega$. We know the steady state is $\frac{V_s(t)}{R}$ which in this case would give us $0.1 A$, so we can see that the plot shows our steady state expression holds.
 
     \begin{figure}[H]
       \centering
@@ -171,7 +184,7 @@ Baoze Lin, Hady Ibrahim
     V_s(t) = Ri(t) + L\frac{di(t)}{dt}
     \]
   
-    Based on the ODE above, inductance $L$ should have no effect on the steady state current $i(t)$ because the derivative of $i(t)$ with respect to time is zero, and inductance is a coeffecient on the derivative. This means that the inductance $L$ term in the ODE will not affect the current $i(t)$ when the system reaches steady state, and the current $i(t)$ will be determined solely by the voltage source $V_s(t)$ and the resistance $R$ in the circuit. This can be seen below in Figure 4, where changing R causes the steady state current $i(t)$ to change, while changing L has no effect on the steady state current $i(t)$.
+    Based on the ODE above, inductance $L$ should have no effect on the steady state current $i(t)$ because the derivative of $i(t)$ with respect to time is zero, and inductance is a coeffecient on the derivative. This means that the inductance $L$ term in the ODE will not affect the current $i(t)$ when the system reaches steady state, and the current $i(t)$ will be determined solely by the voltage source $V_s(t)$ and the resistance $R$ in the circuit. This can be seen below in Figure \ref{fig:figure33}, where changing R causes the steady state current $i(t)$ to change, while changing L has no effect on the steady state current $i(t)$.
 
     \begin{figure}[H]
       \centering
@@ -182,20 +195,20 @@ Baoze Lin, Hady Ibrahim
   
     % ANSWER TO 3.4
     \item
-      Figure 5 and 6 below demonstrates the LTI nature of the system. An LTI system is defined as a system that is both Linear and Time Invariant. A linear system is one that follows the condition that if $x(t) = \alpha x_1(t) + \beta x_2(t), \text{ then } y(t) = \alpha y_1(t) + \beta y_2(t)$. That is, the output of a system is a linear combination of the inputs. We can observe in Figure 5 that the combination of the inputs $V_s1 = 5V$ and $V_s2 = 10V$ results in the outputs $i_1(t)$ and $i_2(t)$, which is equal to $i_3(t)$.$i_3(t)$ is the resultant output from the combination input of $V_s3 = V_s1 + V_s2 = 15V$. This is exhibits the linear property. We can also observe the system is time-invariant by looking at the equation --- the equation has no coeffecients that change over time. We can also see in Figure 6 that when taking the input and adding time delay, it is equivalent to taking the original output and time shifting that. This proves the equation is time-invariant.
+      Figure \ref{fig:figure34a} and \ref{fig:figure34b} below demonstrates the LTI nature of the system. An LTI system is defined as a system that is both Linear and Time Invariant. A linear system is one that follows the condition that if $x(t) = \alpha x_1(t) + \beta x_2(t), \text{ then } y(t) = \alpha y_1(t) + \beta y_2(t)$. That is, the output of a system is a linear combination of the inputs. We can observe in Figure 5 that the combination of the inputs $V_s1 = 5V$ and $V_s2 = 10V$ results in the outputs $i_1(t)$ and $i_2(t)$, which is equal to $i_3(t)$.$i_3(t)$ is the resultant output from the combination input of $V_s3 = V_s1 + V_s2 = 15V$. This is exhibits the linear property. We can also observe the system is time-invariant by looking at the equation --- the equation has no coeffecients that change over time. We can also see in Figure 6 that when taking the input and adding time delay, it is equivalent to taking the original output and time shifting that. This proves the equation is time-invariant.
 
     \begin{figure}[H]
       \centering
       \includegraphics[width=\textwidth]{Figures/figure34.png}
       \caption{Comparing Linear Combination of Inputs to an Equivalent Output Over Time}
-      \label{fig:figure34}
+      \label{fig:figure34a}
     \end{figure}
 
     \begin{figure}[H]
       \centering
       \includegraphics[width=\textwidth]{Figures/figure35.png}
       \caption{Comparing a Time-Shifted Input with the Time-Shifted Output of the Original Signal}
-      \label{fig:figure35}
+      \label{fig:figure34b}
     \end{figure}
 
   \end{enumerate}
