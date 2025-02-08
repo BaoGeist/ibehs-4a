@@ -218,64 +218,58 @@ Baoze Lin, Hady Ibrahim
   \begin{enumerate}
   \item The SIRV model was simulated for 40 years without any vaccination. The initial conditions were set as follows: 
   \begin{itemize}
-      \item Susceptible population: \( S(0) = 15,000 \)
+      \item Susceptible population: \( S(0) = 14,750 \)
       \item Infected population: \( I(0) = 250 \)
       \item Recovered population: \( R(0) = 85,000 \)
       \item Vaccinated population: \( V(0) = 0 \)
   \end{itemize}
-  
-  From the plot in Figure 4.1, we observe that:
+
+  From the plot in Figure \ref{fig:figure41}, we observe that:
   \begin{itemize}
-      \item The susceptible population \( S(t) \) initially declines sharply due to the rapid spread of the infection but stabilizes around 4,000 after repeated infection cycles.
-      \item The infected population \( I(t) \) experiences periodic outbreaks initially but decreases significantly after 10 years, approaching very low levels.
-      \item The recovered population \( R(t) \) increases over time and stabilizes as most of the population gains immunity or recovers from the infection.
-      \item The vaccinated population \( V(t) \) remains zero as no vaccination is introduced in this simulation.
+      \item The susceptible population \( S(t) \) initially declines sharply due to the rapid spread of the infection but stabilizes around 5,900 after repeated infection cycles.
+      \item The infected population \( I(t) \) experiences periodic outbreaks initially but these periodic outbreaks seem to decrease significantly after the 10 year mark, approaching near 0 levels. It is interesting that the infected near the end of the 40 years is still around 60.
+      \item The recovered population \( R(t) \) increases over time and stabilizes around 94,000 as most of the population gains immunity or recovers from the infection. It can be seen that the recovered population is almost the inverse of the susceptible population since as people get infected and recover, they are removed from susceptible.
+      \item The vaccinated population \( V(t) \) remains 0 since there was no vaccine in this scenario.
   \end{itemize}
-  
-  The model demonstrates periodic outbreaks due to the cyclical nature of susceptible and infected individuals without vaccination.
 
   \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/figure41.png}
-    \caption{Plotting the susceptable, infected, recovery, vaccinated population}
+    \caption{Plotting the susceptable, infected, recovered, and vaccinated population for scenario 4.1.}
     \label{fig:figure41}
   \end{figure}
 
-  \item In this scenario, a vaccine is introduced at year 5 with effectiveness \( \epsilon = 0.95 \) and a vaccination rate of \( p = 0.75 \). The initial conditions remain the same as in 4.1. 
+  \item In this scenario, a vaccine is introduced at year 5 with effectiveness \( \epsilon = 0.95 \) and a vaccination rate of \( p = 0.75 \). The initial conditions remain the same as in 4.1.
 
-  From the plot in Figure 4.2, we observe:
+  From the plot in Figure \ref{fig:figure42}, we observe:
   \begin{itemize}
       \item Before year 5, the dynamics are similar to the results in 4.1, with periodic outbreaks and a declining susceptible population.
-      \item After year 5, vaccination is rolled out, leading to a rapid increase in the vaccinated population \( V(t) \).
-      \item The susceptible population \( S(t) \) decreases significantly after year 5 due to vaccination, reducing the number of people susceptible to the infection.
-      \item The infected population \( I(t) \) drops sharply after vaccination, with outbreaks becoming less frequent and less severe.
-      \item The recovered population \( R(t) \) continues to increase but stabilizes at a higher level than in 4.1.
+      \item After year 5, vaccination is rolled out, leading to a decrease in the infection cycles. The outbreaks are less frequent and severe. The infected population is around 0 at the end of the 40 years here.
   \end{itemize}
   
-  The introduction of vaccination after year 5 effectively curtails the periodic outbreaks, leading to better control of the disease.
+  The introduction of vaccination after year 5 effectively reduces the effect of the periodic outbreaks, leading to better control of the disease.
 
   \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/figure42.png}
-    \caption{Plotting infected population}
+    \caption{Plotting infected population for scenario 4.2.}
     \label{fig:figure42}
   \end{figure}
 
   \item In this scenario, the critical vaccination rate \( p_c \) was calculated to satisfy the condition \( \epsilon p_c > 1 - \frac{1}{R_0} \). The critical vaccination rate ensures that the effective reproduction number \( R_e < 1 \), leading to disease eradication.
 
-  From the plot in Figure 4.3, we observe:
+  From the plot in Figure \ref{fig:figure43}, we observe:
   \begin{itemize}
       \item The infected population \( I(t) \) declines rapidly and effectively approaches zero within the first 10 years.
-      \item The vaccination rollout significantly reduces the number of susceptible individuals, preventing further outbreaks.
-      \item The recovered population \( R(t) \) stabilizes as no further infections occur.
+      \item The vaccination rollout significantly reduces the number of outbreak cycles to just 1 close to after year 5 which prevents further outbreaks. The number of infected individuals stabilizes to near 0.
   \end{itemize}
   
-  This scenario demonstrates that achieving a critical vaccination rate leads to the eradication of the disease within a reasonable timeframe, as indicated by the absence of future outbreaks.
+  This scenario demonstrates that achieving a critical vaccination rate leads to the eradication of the disease within a reasonable timeframe, as shown by the absence of future outbreaks.
 
   \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/figure43.png}
-    \caption{Plotting infected population}
+    \caption{Plotting infected population for scenario 4.3.}
     \label{fig:figure43}
   \end{figure}
   
@@ -284,9 +278,7 @@ Baoze Lin, Hady Ibrahim
 
 \item Question 5
   \begin{enumerate}
-  \item Part A  % This will appear as "5.1"
-
-  We are given the second-order differential equation:
+  \item We are given the second-order differential equation:
   \[
   2 \frac{d^2 x(t)}{dt^2} + 3 \frac{dx(t)}{dt} - 2 x(t) = t e^{-2t}
   \]
@@ -312,9 +304,7 @@ Baoze Lin, Hady Ibrahim
   X(s) = \frac{1 - 4 (s + 2)^2}{(s + 2)^3 (2s - 1)}
   \]
 
-  \item
-
-  \subsection*{Step 1: Partial Fraction Expansion}
+  \item \subsection*{Step 1: Partial Fraction Expansion}
   We decompose \( X(s) \) as:
   \[
   X(s) = \frac{A}{s + 2} + \frac{B}{(s + 2)^2} + \frac{C}{(s + 2)^3} + \frac{D}{2s - 1}
