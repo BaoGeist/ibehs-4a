@@ -126,7 +126,7 @@ Baoze Lin, Hady Ibrahim
 
   % ANSWER TO 2.4
   \item
-  With a new oscillating defintion of Ta, we get Figure \ref{fig:figure24} below demonstrating the temperature and furnace input over time.
+  With a new oscillating defintion of $T_a$, we get Figure \ref{fig:figure24} below demonstrating the temperature and furnace input over time.
 
   \begin{figure}[H]
     \centering
@@ -195,7 +195,7 @@ Baoze Lin, Hady Ibrahim
   
     % ANSWER TO 3.4
     \item
-      Figure \ref{fig:figure34a} and \ref{fig:figure34b} below demonstrates the LTI nature of the system. An LTI system is defined as a system that is both Linear and Time Invariant. A linear system is one that follows the condition that if $x(t) = \alpha x_1(t) + \beta x_2(t), \text{ then } y(t) = \alpha y_1(t) + \beta y_2(t)$. That is, the output of a system is a linear combination of the inputs. We can observe in Figure 5 that the combination of the inputs $V_s1 = 5V$ and $V_s2 = 10V$ results in the outputs $i_1(t)$ and $i_2(t)$, which is equal to $i_3(t)$.$i_3(t)$ is the resultant output from the combination input of $V_s3 = V_s1 + V_s2 = 15V$. This is exhibits the linear property. We can also observe the system is time-invariant by looking at the equation --- the equation has no coeffecients that change over time. We can also see in Figure 6 that when taking the input and adding time delay, it is equivalent to taking the original output and time shifting that. This proves the equation is time-invariant.
+      Figure \ref{fig:figure34a} and \ref{fig:figure34b} below demonstrates the LTI nature of the system. An LTI system is defined as a system that is both Linear and Time Invariant. A linear system is one that follows the condition that if $x(t) = \alpha x_1(t) + \beta x_2(t), \text{ then } y(t) = \alpha y_1(t) + \beta y_2(t)$. That is, the output of a system is a linear combination of the inputs. We can observe in \ref{fig:figure34a} that the combination of the inputs $V_s1 = 5V$ and $V_s2 = 10V$ results in the outputs $i_1(t)$ and $i_2(t)$, which is equal to $i_3(t)$.$i_3(t)$ is the resultant output from the combination input of $V_s3 = V_s1 + V_s2 = 15V$. This is exhibits the linear property. We can also observe the system is time-invariant by looking at the equation --- the equation has no coeffecients that change over time. We can also see in \ref{fig:figure34b} that when taking the input and adding time delay, it is equivalent to taking the original output and time shifting that. This proves the equation is time-invariant.
 
     \begin{figure}[H]
       \centering
@@ -216,13 +216,69 @@ Baoze Lin, Hady Ibrahim
 
 \item Question 4
   \begin{enumerate}
-  \item Part A  % This will appear as "4.1"
+  \item The SIRV model was simulated for 40 years without any vaccination. The initial conditions were set as follows: 
+  \begin{itemize}
+      \item Susceptible population: \( S(0) = 15,000 \)
+      \item Infected population: \( I(0) = 250 \)
+      \item Recovered population: \( R(0) = 85,000 \)
+      \item Vaccinated population: \( V(0) = 0 \)
+  \end{itemize}
+  
+  From the plot in Figure 4.1, we observe that:
+  \begin{itemize}
+      \item The susceptible population \( S(t) \) initially declines sharply due to the rapid spread of the infection but stabilizes around 4,000 after repeated infection cycles.
+      \item The infected population \( I(t) \) experiences periodic outbreaks initially but decreases significantly after 10 years, approaching very low levels.
+      \item The recovered population \( R(t) \) increases over time and stabilizes as most of the population gains immunity or recovers from the infection.
+      \item The vaccinated population \( V(t) \) remains zero as no vaccination is introduced in this simulation.
+  \end{itemize}
+  
+  The model demonstrates periodic outbreaks due to the cyclical nature of susceptible and infected individuals without vaccination.
 
-  SOLUTION
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/figure41.png}
+    \caption{Plotting the susceptable, infected, recovery, vaccinated population}
+    \label{fig:figure41}
+  \end{figure}
 
-  \item Part B  % This will appear as "4.2"
+  \item In this scenario, a vaccine is introduced at year 5 with effectiveness \( \epsilon = 0.95 \) and a vaccination rate of \( p = 0.75 \). The initial conditions remain the same as in 4.1. 
 
-  SOLUTION
+  From the plot in Figure 4.2, we observe:
+  \begin{itemize}
+      \item Before year 5, the dynamics are similar to the results in 4.1, with periodic outbreaks and a declining susceptible population.
+      \item After year 5, vaccination is rolled out, leading to a rapid increase in the vaccinated population \( V(t) \).
+      \item The susceptible population \( S(t) \) decreases significantly after year 5 due to vaccination, reducing the number of people susceptible to the infection.
+      \item The infected population \( I(t) \) drops sharply after vaccination, with outbreaks becoming less frequent and less severe.
+      \item The recovered population \( R(t) \) continues to increase but stabilizes at a higher level than in 4.1.
+  \end{itemize}
+  
+  The introduction of vaccination after year 5 effectively curtails the periodic outbreaks, leading to better control of the disease.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/figure42.png}
+    \caption{Plotting infected population}
+    \label{fig:figure42}
+  \end{figure}
+
+  \item In this scenario, the critical vaccination rate \( p_c \) was calculated to satisfy the condition \( \epsilon p_c > 1 - \frac{1}{R_0} \). The critical vaccination rate ensures that the effective reproduction number \( R_e < 1 \), leading to disease eradication.
+
+  From the plot in Figure 4.3, we observe:
+  \begin{itemize}
+      \item The infected population \( I(t) \) declines rapidly and effectively approaches zero within the first 10 years.
+      \item The vaccination rollout significantly reduces the number of susceptible individuals, preventing further outbreaks.
+      \item The recovered population \( R(t) \) stabilizes as no further infections occur.
+  \end{itemize}
+  
+  This scenario demonstrates that achieving a critical vaccination rate leads to the eradication of the disease within a reasonable timeframe, as indicated by the absence of future outbreaks.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/figure43.png}
+    \caption{Plotting infected population}
+    \label{fig:figure43}
+  \end{figure}
+  
   \end{enumerate}
 \newpage
 
@@ -269,31 +325,6 @@ Baoze Lin, Hady Ibrahim
   \]
 
   \subsection*{Step 2: Determine the Coefficients}
-  To find \( A \), \( B \), \( C \), and \( D \), we use strategic substitutions for \( s \) and equate coefficients:
-
-  1. Substitute \( s = -2 \):
-  \[
-  1 - 4 (s + 2)^2 = 0 \Rightarrow C = -\frac{1}{5}
-  \]
-
-  2. Substitute \( s = \frac{1}{2} \):
-  \[
-  D = -\frac{192}{125}
-  \]
-
-  3. Substitute \( s = 0 \):
-  \[
-  A = \frac{96}{125}
-  \]
-
-  4. Substitute \( s = 1 \):
-  \[
-  B = -\frac{2}{25}
-  \]
-
-
-  To find \( A \), \( B \), \( C \), and \( D \), we substitute strategic values of \( s \) and equate coefficients of powers of \( s \).
-
   \subsubsection*{1. Substitute \( s = -2 \) to find \( C \)}
   \[
   1 - 4(s + 2)^2 = (s + 2)^2 (2s - 1) A + (s + 2) (2s - 1) B + (2s - 1) C + (s + 2)^3 D
@@ -445,12 +476,12 @@ Baoze Lin, Hady Ibrahim
 
 \end{enumerate}
 
-\pagebreak
+% \pagebreak
 
-\begin{thebibliography}{9}
-  \bibitem{matlab_ode45}
-  MATLAB Documentation: \texttt{ode45}. Available at: 
-  \url{https://www.mathworks.com/help/matlab/ref/ode45.html}.
-\end{thebibliography}
+% \begin{thebibliography}{9}
+%   \bibitem{matlab_ode45}
+%   MATLAB Documentation: \texttt{ode45}. Available at: 
+%   \url{https://www.mathworks.com/help/matlab/ref/ode45.html}.
+% \end{thebibliography}
 
 \end{document}
