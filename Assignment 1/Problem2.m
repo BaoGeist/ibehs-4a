@@ -46,6 +46,8 @@ end
 % Plot
 figure;
 
+totalGasSpentCal = sum(Qf) * dt
+
 subplot(2, 1, 1);
 plot(t, T, 'b', 'LineWidth', 1.5);
 xlabel('t (hours)');
@@ -101,6 +103,8 @@ for n = 1:N-1
     % defined earlier
     T(n+1) = T(n) + dt * dTdt;
 end
+
+totalGasSpentCal = sum(Qf) * dt
 
 % Plot
 figure;
