@@ -18,7 +18,6 @@ xlabel('Time (s)');
 ylabel('Current i(t) (A)');
 title('Current i(t) vs Time');
 grid on;
-
 saveas(gcf, 'Figures/figure32.png');
 
 %% Question 3.3
@@ -84,8 +83,6 @@ plot(t4, i4, 'g', 'LineWidth', 1.5);
 xlabel('t (seconds)'); ylabel('Current (A)'); 
 title('Current vs Time (Altered R & L)'); 
 grid on;
-
-% Save Figure
 saveas(gcf, 'Figures/figure33.png');
 
 
@@ -133,25 +130,23 @@ ylabel('Current (A)');
 title('Comparison of i_3(t) and i_1(t) + i_2(t)');
 legend('i_3(t)', 'i_1(t) + i_2(t)', 'Location', 'Best');
 grid on;
-
-% Save the figure
 saveas(gcf, 'Figures/figure34.png');
 
 %% Question 3.4 - Verifying Time-Invariance
 % Parameters
-R = 50;          % Resistance
-L = 2;           % Inductance
-V = 5;          % Constant input voltage
-i0 = 0;          % Initial current
-tspan = 0:0.001:0.5;  % Original time span
+R = 50;
+L = 2;
+V = 5;
+i0 = 0;
+tspan = 0:0.001:0.5;
 
 % Original System Response
 ode_function_original = @(t, i) (V - R * i) / L;
 [t_original, i_original] = ode45(ode_function_original, tspan, i0);
 
 % Time-Shifted System (Delay by td)
-td = 0.1;  % Time delay in seconds
-tspan_shifted = tspan + td;  % Shift time span
+td = 0.1;
+tspan_shifted = tspan + td;
 
 % System with Time-Shifted Input
 ode_function_shifted = @(t, i) (V - R * i) / L;
@@ -163,15 +158,13 @@ i_original_delayed = interp1(t_original, i_original, t_shifted - td, 'linear');
 % Plotting
 figure;
 hold on;
-plot(t_original, i_original, 'b', 'LineWidth', 1.5);  % Original output
-plot(t_shifted, i_shifted, 'r--', 'LineWidth', 1.5);  % Shifted output
-plot(t_shifted, i_original_delayed, 'g:', 'LineWidth', 1.5);  % Interpolated original
+plot(t_original, i_original, 'b', 'LineWidth', 1.5);
+plot(t_shifted, i_shifted, 'r--', 'LineWidth', 1.5);
+plot(t_shifted, i_original_delayed, 'g:', 'LineWidth', 1.5);
 
 xlabel('Time (s)');
 ylabel('Current i(t) (A)');
 title('Time-Invariance Check');
 legend('Original Response', 'Shifted Input Response', 'Original Response Shifted', 'Location', 'Best');
 grid on;
-
-% Save the figure
 saveas(gcf, 'Figures/figure35.png');
