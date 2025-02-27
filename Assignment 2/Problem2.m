@@ -69,3 +69,43 @@ saveas(gcf, 'Figures/figure2-3.png');
 % Display temperature after 10 seconds
 T_10s = T(end);
 fprintf('Temperature after 10 seconds: %.2f K\n', T_10s);
+
+%% 2.4
+% Parameters
+T_steady = 1380; % Steady-state temperature (K)
+TF_steady = 1380; % Steady-state furnace temperature (K)
+A = 1e-5; % Surface area in m^2
+m = 0.1; % Mass in g
+cp = 0.4; % Heat capacity in J/g/K
+epsilon = 0.7; % Emissivity
+sigma = 5.669e-8; % Stefan-Boltzmann constant (W/m^2/K^4)
+
+tspan = 0:0.01:10;
+
+% 2.2 - Linearized Transfer Function Model
+s = tf('s');
+G = (4*epsilon*A*sigma*TF_steady^3 / m*cp) / (s + 4*epsilon*A*sigma*T_steady^3 / m*cp);
+
+delta_TF = -30;
+T_linear = delta_TF * step(G, tspan);
+T_linear = T_steady + T_linear;
+
+% 2.3 - Nonlinear ODE Model
+odefun = @(t, T) (epsilon * A * sigma * (TF_new^4 - T^4)) / (m * cp);
+[t, T_nonlinear] = ode45(odefun, tspan, T0);
+
+% Plot comparaison
+figure;
+plot(tspan, T_linear, 'r', 'LineWidth', 1.5); hold on;
+plot(tspan, T_nonlinear, 'b--', 'LineWidth', 1.5);
+xlabel('Time (s)');
+ylabel('Thermocouple Temperature T(t) [K]');
+title('Comparison of Linear vs. Nonlinear Model');
+legend('Linearized Model (2.2)', 'Nonlinear ODE (2.3)');
+grid on;
+saveas(gcf, 'Figures/figure2-4.png');
+
+% Discussion
+% The comparison shows how well the linearized model approximates the nonlinear response.
+% If the nonlinear and linear models align closely, the linearization is a good approximation.
+% If they deviate significantly, the linear model may not be suitable for controller design.
