@@ -13,10 +13,6 @@ grid on;
 
 subplot(1,2,2);
 pzmap(Y2);
-% hold on;
-% [p, z] = pzmap(Y2);  % get zeros and poles
-% plot(real(p), imag(p), 'kx', 'MarkerSize', 12, 'LineWidth', 2); % increase X thickness
-% hold off;
 title('Pole-Zero Map of Y2(s)');
 grid on;
 saveas(gcf, 'Figures/figure1-1.png');
