@@ -111,7 +111,7 @@ Baoze Lin, Hady Ibrahim
 
     % ANSWER TO 2.3
     \item
-    The nonlinear ODE model for the thermocouple temperature was simulated using ode45(). The resulting response follows a slightly curved trajectory, showing a more gradual cooling effect compared to the linearized model. You can see here, that it is relatively rapid towards the start and then slows down as time goes on.
+    The nonlinear ODE model for the thermocouple temperature was simulated using ode45(). The resulting response follows a slightly curved trajectory, showing a more gradual cooling effect compared to the linearized model. You can see here, that it is very similar to the linearized model, it is a little more rapid towards the start and then slows down as time goes on.
 
     \begin{figure}[H]
       \centering
@@ -122,7 +122,7 @@ Baoze Lin, Hady Ibrahim
 
     % ANSWER TO 2.4
     \item
-    A comparison of the linear and nonlinear models shows that the linearized transfer function underestimates the cooling rate. The nonlinear model predicts a faster response because radiative heat transfer follows the Stefan-Boltzmann Law, which is temperature-dependent and nonlinear. This means the rate of heat loss changes more significantly at higher temperatures compared to a simple linear approximation.
+    Radiative heat transfer follows the Stefan-Boltzmann Law, which is temperature-dependent and nonlinear. This means the rate of heat loss changes more significantly at higher temperatures compared to a simple linear approximation. Due to this, we expected to see that a comparison of the linear and nonlinear models would show that the linearized transfer function underestimates the cooling rate. What we actually saw was that with a -30°C change in temperature, the linearized model predicts a faster response by just a little compared to the non-linear model. With the +30°C change, the non-linear model was a little faster, but again very similar responses. This shows that the linearized model estimated the true temperature quite well. 
 
     \begin{figure}[H]
       \centering
@@ -163,6 +163,27 @@ Baoze Lin, Hady Ibrahim
       \caption{Furnace Temperature vs. Measured Thermocouple Response with Heat Input \( Q \)}
       \label{fig:figure25b}
     \end{figure}
+
+    % ANSWER TO 2.5
+    \item
+    In this case, we analyzed the **effect of heat input \( Q(t) \) on the thermocouple temperature**. The **furnace response to \( Q(t) \) was modeled**, and the thermocouple's response was calculated using the cascaded transfer functions:
+
+    \[
+    \frac{T(s)}{Q(s)} = \frac{T(s)}{T_F(s)} \times \frac{T_F(s)}{Q(s)}
+    \]
+
+    The results show that the furnace temperature \( T_F(t) \) increases rapidly in response to the applied heat input and reaches its steady-state value within a few seconds. In contrast, the thermocouple temperature \( T(t) \) rises much more gradually indicating a significant time delay in its response. 
+
+    This delay occurs because the thermocouple absorbs heat primarily through radiation, which is a slower process compared to the direct heating of the furnace. As a result, the thermocouple reading does not immediately reflect the actual furnace temperature, but instead lags behind, converging toward the final temperature over time (which it doesn't even reach in the 10 seconds).
+
+    In control applications, this measurement lag is critical to know because relying solely on \( T(t) \) for feedback could lead to delayed or incorrect adjustments. To improve performance, a control system should account for this delay and maybe add some other elements or logic to work around it.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure2-5.png}
+      \caption{Furnace Temperature vs. Measured Thermocouple Response with Heat Input \( Q \)}
+      \label{fig:figure25} 
+    \end{figure}    
 
   \end{enumerate}
 

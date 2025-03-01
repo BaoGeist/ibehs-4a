@@ -11,7 +11,7 @@ sigma = 5.669e-8;
 t = 0:0.01:10;
 
 s = tf('s');
-G = (4*epsilon*A*sigma*TF_steady^3 / m*cp) / (s + 4*epsilon*A*sigma*T_steady^3 / m*cp);
+G = ((4*epsilon*A*sigma*TF_steady^3) / (m*cp)) / (s + (4*epsilon*A*sigma*T_steady^3) / (m*cp));
 
 % Compute step response
 T_response = -30 * step(G, t); % -30 is the 30°C temp. drop
@@ -83,7 +83,7 @@ delta_TF = -30;
 
 % from 2.2: linearized transfer function model
 s = tf('s');
-G = (4*epsilon*A*sigma*TF_steady^3 / m*cp) / (s + 4*epsilon*A*sigma*T_steady^3 / m*cp);
+G = ((4*epsilon*A*sigma*TF_steady^3) / (m*cp)) / (s + (4*epsilon*A*sigma*T_steady^3) / (m*cp));
 
 T_linear_temp_down = delta_TF * step(G, tspan);
 T_linear_temp_down = T_steady + T_linear_temp_down;
@@ -101,7 +101,7 @@ odefun = @(t, T) (epsilon * A * sigma * (TF_new^4 - T^4)) / (m * cp);
 delta_TF = 30;
 % from 2.2: linearized transfer function model
 s = tf('s');
-G = (4*epsilon*A*sigma*TF_steady^3 / m*cp) / (s + 4*epsilon*A*sigma*T_steady^3 / m*cp);
+G = ((4*epsilon*A*sigma*TF_steady^3) / (m*cp)) / (s + (4*epsilon*A*sigma*T_steady^3) / (m*cp));
 
 T_linear_temp_up = delta_TF * step(G, tspan);
 T_linear_temp_up = T_steady + T_linear_temp_up;
@@ -141,11 +141,6 @@ hold off;
 grid on;
 saveas(gcf, 'Figures/figure2-4b.png');
 
-% Discussion
-% The comparison shows how well the linearized model approximates the nonlinear response.
-% If the nonlinear and linear models align closely, the linearization is a good approximation.
-% If they deviate significantly, the linear model may not be suitable for controller design.
-
 %% 2.5
 % Params
 T_steady = 1380;
@@ -165,7 +160,7 @@ T_F = 20 * (1 - exp(-t));
 s = tf('s');
 
 % T(s)/T_F(s)
-G_thermocouple = (4*epsilon*A*sigma*TF_steady^3 / m*cp) / (s + 4*epsilon*A*sigma*T_steady^3 / m*cp);
+G_thermocouple = ((4*epsilon*A*sigma*TF_steady^3) / (m*cp)) / (s + (4*epsilon*A*sigma*T_steady^3) / (m*cp));
 
 % T_F(s)/Q(s)
 G_furnace = 1 / (s + 1);
