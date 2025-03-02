@@ -24,8 +24,8 @@ Baoze Lin, Hady Ibrahim
     \item
     The pole-zero maps for \( Y_1(s) \) and \( Y_2(s) \) help us see system stability. 
 
-    - The left plot shows the pole-zero locations for \( Y_1(s) \), which has poles in the left half-plane, indicating a stable system. The poles are: $s=0, -2, -3$. \\
-    - The right plot for \( Y_2(s) \) shows at minimum 1 pole in the right half-plane, meaning the system is unstable and will have an exponentially growing response. The poles are: $s=0, 2, 1+2i, 1-2i$.
+    - The left plot shows the pole-zero locations for \( Y_1(s) \), which has poles in the left half-plane, indicating a stable system. It is not oscillatory since there are no imaginary parts to the poles. The poles are: $s=0, -2, -3$. \\
+    - The right plot for \( Y_2(s) \) shows at minimum 1 pole in the right half-plane, meaning the system is unstable and will have an exponentially growing response. It is oscillatory since there are imaginary parts to the poles. The poles are: $s=0, 2, 1+2i, 1-2i$.
 
     \begin{figure}[H]
       \centering
@@ -101,6 +101,7 @@ Baoze Lin, Hady Ibrahim
     \item
     The thermocouple's response to a 30°C drop in furnace temperature was simulated using the linearized transfer function. 
     The step response of the thermocouple shows a gradual decrease in temperature, confirming that the thermocouple lags behind furnace temperature changes.
+    The temperature after 10 seconds was 1360.57 K.
 
     \begin{figure}[H]
       \centering
@@ -112,6 +113,7 @@ Baoze Lin, Hady Ibrahim
     % ANSWER TO 2.3
     \item
     The nonlinear ODE model for the thermocouple temperature was simulated using ode45(). The resulting response follows a slightly curved trajectory, showing a more gradual cooling effect compared to the linearized model. You can see here, that it is very similar to the linearized model, it is a little more rapid towards the start and then slows down as time goes on.
+    The temperature after 10 seconds was 1361.07 K.
 
     \begin{figure}[H]
       \centering
@@ -141,32 +143,6 @@ Baoze Lin, Hady Ibrahim
     % ANSWER TO 2.5
     \item
     In this case, we analyzed the effect of heat input \( Q(t) \) on the thermocouple temperature. The furnace response to \( Q(t) \) was modeled, and the thermocouple's response was calculated by multiplying the transfer functions:
-
-    \[
-    \frac{T(s)}{Q(s)} = \frac{T(s)}{T_F(s)} \times \frac{T_F(s)}{Q(s)}
-    \]
-
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.7\textwidth]{Figures/handcalc/q2-5.png}
-      \caption{Hand calculation to find $T_F(s)$ and $T(s)$ given the new $Q(s)$ input.}
-      \label{fig:figure25a} 
-    \end{figure}
-
-    The final response shows a delayed and gradual increase in temperature, confirming that both the furnace and thermocouple introduce time lag in heat transfer.
-
-    The final response shows a delayed and gradual increase in temperature, confirming that both the furnace and thermocouple introduce time lag in heat transfer. Notably, \( T_F(t) \) responds much faster to the step change in heat input, reaching its new steady-state value quickly. In contrast, \( T(t) \) (thermocouple reading) lags significantly, indicating that the thermocouple has a much slower thermal response. Knowing about this delay is critical in control applications, as for example, in this case, it means that relying solely on the thermocouple reading for feedback could lead to incorrect adjustments due to outdated temperature measurements.
-
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=1\textwidth]{Figures/figure2-5.png}
-      \caption{Furnace Temperature vs. Measured Thermocouple Response with Heat Input \( Q \)}
-      \label{fig:figure25b}
-    \end{figure}
-
-    % ANSWER TO 2.5
-    \item
-    In this case, we analyzed the **effect of heat input \( Q(t) \) on the thermocouple temperature**. The **furnace response to \( Q(t) \) was modeled**, and the thermocouple's response was calculated using the cascaded transfer functions:
 
     \[
     \frac{T(s)}{Q(s)} = \frac{T(s)}{T_F(s)} \times \frac{T_F(s)}{Q(s)}
