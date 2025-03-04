@@ -163,6 +163,39 @@ Baoze Lin, Hady Ibrahim
 
   \end{enumerate}
 
+\item Question 3
+  \begin{enumerate}
+    % ANSWER TO 3.1
+    \item 
+    The given transfer function is:
+
+    \[
+    \frac{V(s)}{P(s)} = \frac{A K_{P \to V}}{\rho A L s^2 + b s + c}
+    \]
+
+    To rewrite it in standard form, divide the numerator and denominator by \(c\):
+
+    \[
+    \frac{V(s)}{P(s)} = \frac{\frac{A K_{P \to V}}{c}}{\frac{\rho A L}{c}s^2 + \frac{b}{c}s + 1}
+    \]
+
+    Let:
+
+    \[
+    K = \frac{A K_{P \to V}}{c}, \quad \tau^2 = \frac{\rho A L}{c}, \quad 2\zeta\tau = \frac{b}{c}
+    \]
+
+    The transfer function in standard form becomes:
+
+    \[
+    \frac{V(s)}{P(s)} = \frac{K}{\tau^2 s^2 + 2\zeta\tau s + 1}
+    \]
+
+    % ANSWER TO 3.2
+    \item
+
+  \end{enumerate}
+
 \end{enumerate}
 
 \end{document}
