@@ -1,34 +1,36 @@
 %% 4.2
-% Parameters
-F_V = 0.4; % F/V [min^-1]
-CA0_bar = 0.6767; % [kmol/m^3]
-T0 = 352.6634; % [K]
-k0 = 65e9; % [min^-1]
-E = 8.314e4; % [kJ/kmol]
-R = 8.314; % [kJ/kmol·K]
+function F = root2d(x)
+    % parameters
+    F_V = 0.4; % F/V [min^-1]
+    CA0_bar = 0.6767; % [kmol/m^3]
+    T0 = 352.6634; % [K]
+    k0 = 65e9; % [min^-1]
+    E = 8.314e4; % [kJ/kmol]
+    R = 8.314; % [kJ/kmol·K]
 
-% Define the system of equations
-fun = @(x) [
-    % Equation 1: Material balance
-    exp(-E / (R * x(2))) - (F_V * (CA0_bar - x(1))) / (k0 * x(1));
-    % Equation 2: Energy balance
-    T0 - x(2) - (-145.2887538 * (CA0_bar - x(1)))
-];
+    % system of equations
+    F(1) = exp(-E / (R * x(2))) - (F_V * (CA0_bar - x(1))) / (k0 * x(1)); % Material balance
+    F(2) = T0 - x(2) - (-145.2887538 * (CA0_bar - x(1))); % Energy balance
+end
 
-% Initial guesses for [CA_bar, T_bar]
-x0 = [0.02, 449]; % Initial guesses for [CA_bar, T_bar]
+fun = @root2d;
 
-% Solve the system of equations using fsolve
+% initial guesses for [CA_bar, T_bar]
+x0 = [0.02, 449];
+
+% solve the system of equations using fsolve
 options = optimset('Display', 'iter', 'TolFun', 1e-12, 'TolX', 1e-12);
-[x, fval, exitflag] = fsolve(fun, x0, options);
+x = fsolve(fun, x0, options);
 
-% Extract results
-CA_bar = x(1); % Steady-state concentration of A
-T_bar = x(2); % Steady-state temperature
+% extract results
+CA_bar = x(1); 
+T_bar = x(2); 
 
-% Display the results
+% display the results
 fprintf('Steady-state CA_bar = %.4f kmol/m^3\n', CA_bar);
 fprintf('Steady-state T_bar = %.2f K\n', T_bar);
+
+% reference: https://www.mathworks.com/help/optim/ug/fsolve.html
 
 %% 4.3
 % Parameters

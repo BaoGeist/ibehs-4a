@@ -227,7 +227,7 @@ Baoze Lin, Hady Ibrahim
     Based on the above determination of the optimized values for tau and zeta as well as the formulas for the variables we determined earlier, we obtain the following values:
 
     \begin{enumerate}
-      \item \textbf{Parameter \(c\):}
+      \item \textit{c} $\triangleq$ lineal friction of the fluid moving through the catheter:
       \[
         c = \frac{\rho A L}{\tau^2}
         \]
@@ -239,7 +239,7 @@ Baoze Lin, Hady Ibrahim
         c = \frac{0.62 \cdot 0.20 \cdot 6}{(0.61)^2} = \frac{0.744}{0.3721} = 1.9995 \approx 2.00
         \]
     
-        \item \textbf{Parameter \(b\):}
+        \item \textit{b} $\triangleq$ viscous friction of the fluid in moving through the catheter:
         \[
         b = 2\zeta\tau c
         \]
@@ -251,7 +251,7 @@ Baoze Lin, Hady Ibrahim
         b = 2 \cdot 0.33 \cdot 0.61 \cdot 2.00 = 0.8050 \approx 0.81
         \]
     
-        \item \textbf{Parameter \(K_{P \to V}\):}
+        \item \textit{$K_{P \to V}$} $\triangleq$ gain that relates a change in output voltage to a change in pressure:
         From the process gain \(K\), we know:
         \[
         K = \frac{A K_{P \to V}}{c}
@@ -269,7 +269,7 @@ Baoze Lin, Hady Ibrahim
         \]
     \end{enumerate}
     
-    \subsubsection*{Final Results}
+    Therefore, the approximated final values are:
     
     \[
     c = 2.00, \quad b = 0.81, \quad K_{P \to V} = 100
@@ -287,19 +287,31 @@ Baoze Lin, Hady Ibrahim
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.8\textwidth]{Figures/handcalc/figure4-1.png}
-      \caption{Linearized Equations for the Pendulum System}
+      \includegraphics[width=0.9\textwidth]{Figures/handcalc/figure4-1.png}
+      \caption{Linearized Equations for the Non-Isothermal Stirred Tank Bioreactor}
       \label{fig:figure41}
     \end{figure}
 
+    The linearized equations in deviation form are:
+    \begin{enumerate}
+      \item Linearized Material Balance:
+        \[
+        \frac{dC_A'(t)}{dt} = \left( - \frac{F}{V} - k_0 e^{-\frac{E}{R\bar{T}}} \right) C_A'(t) - k_0 \bar{C}_A \frac{E}{R\bar{T}^2} e^{-\frac{E}{R\bar{T}}} T'(t) + \frac{F}{V} C_{A0}'(t).
+        \]
+      \item Linearized Energy Balance:
+        \[  
+        \frac{dT'(t)}{dt} = - \frac{k_0 \Delta H}{\rho c_p} e^{-\frac{E}{R\bar{T}}} C_A'(t) + \left( -\frac{F}{V} - \frac{k_0 \bar{C}_A \Delta H}{\rho c_p} e^{-\frac{E}{R\bar{T}}} \frac{E}{R\bar{T}^2} \right) T'(t) + \frac{Q'(t)}{\rho c_p V}.
+        \]
+    \end{enumerate}    
+
     % ANSWER TO 4.2
     \item
-    Using the original non-linearized equations, We have the math below:
+    Using the original non-linearized equations and the fact that the system is at steady state, We have the math below:
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.8\textwidth]{Figures/handcalc/figure4-2.png}
-      \caption{Nonlinear Equations for the Pendulum System}
+      \includegraphics[width=0.9\textwidth]{Figures/handcalc/figure4-2.png}
+      \caption{Nonlinear Steady-State Equations for the Non-Isothermal Stirred Tank Bioreactor}
       \label{fig:figure42}
     \end{figure}
 
@@ -313,16 +325,16 @@ Baoze Lin, Hady Ibrahim
     \bar{C}_{A0} - \bar{C}_A = (T_0 - \bar{T}) \frac{\rho C_p}{\Delta H}
     \]
 
-    This system can be solved in Matlab using the fsolve() function. There are several equilibria for this problem, so we need to provide an initial guess for the solver to converge to the correct solution. The initial guess will be a value really close to the provided equilibrium value in the question, $\bar{C}_A = 0.0199 \text{ kmol} \cdot \text{m}^{-3}, \bar{T} = 448.09 \text{ K}$. We use 0.02 and 449 as the initial guesses for the solver.
-
-    The optimized values as determined by the solver is shown below.
+    This system can be solved in Matlab using the fsolve() function, as done in the code presented in Problem4.m. There are several equilibria for this problem, so we need to provide an initial guess for the solver to converge to the correct solution. The initial guess will be a value really close to the provided equilibrium value in the question, $\bar{C}_A = 0.0199 \text{ kmol} \cdot \text{m}^{-3}, \bar{T} = 448.09 \text{ K}$. We use 0.02 and 449 as the initial guesses for the solver. The optimized values as determined by the solver is shown below.
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.5\textwidth]{Figures/handcalc/figure4-2b.png}
-      \caption{Optimized Equilibrium Values for the Nonlinear Pendulum System}
+      \includegraphics[width=0.4\textwidth]{Figures/handcalc/figure4-2b.png}
+      \caption{Optimized Equilibrium Values for the Nonlinear Non-Isothermal Stirred Tank Bioreactor}
       \label{fig:figure43}
     \end{figure}
+
+    
 
     % ANSWER TO 4.3
     \item
@@ -342,28 +354,28 @@ Baoze Lin, Hady Ibrahim
     \begin{figure}[H]
       \centering
       \includegraphics[width=\textwidth]{Figures/handcalc/figure4-4a.png}
-      \caption{Transfer Functions for the Pendulum System}
+      \caption{Transfer Functions for the Non-Isothermal Stirred Tank Bioreactor}
       \label{fig:figure45}
     \end{figure}
 
     \begin{figure}[H]
       \centering
       \includegraphics[width=\textwidth]{Figures/handcalc/figure4-4b.png}
-      \caption{Transfer Functions for the Pendulum System}
+      \caption{Transfer Functions for the Non-Isothermal Stirred Tank Bioreactor}
       \label{fig:figure46}
     \end{figure}
 
     \begin{figure}[H]
       \centering
       \includegraphics[width=\textwidth]{Figures/handcalc/figure4-4c.png}
-      \caption{Transfer Functions for the Pendulum System}
+      \caption{Transfer Functions for the Non-Isothermal Stirred Tank Bioreactor}
       \label{fig:figure47}
     \end{figure}
 
     \begin{figure}[H]
       \centering
       \includegraphics[width=\textwidth]{Figures/handcalc/figure4-4d.png}
-      \caption{Transfer Functions for the Pendulum System}
+      \caption{Transfer Functions for the Non-Isothermal Stirred Tank Bioreactor}
       \label{fig:figure48}
     \end{figure}
 
