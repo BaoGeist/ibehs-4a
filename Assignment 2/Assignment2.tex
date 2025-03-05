@@ -24,8 +24,8 @@ Baoze Lin, Hady Ibrahim
     \item
     The pole-zero maps for \( Y_1(s) \) and \( Y_2(s) \) help us see system stability. 
 
-    - The left plot shows the pole-zero locations for \( Y_1(s) \), which has poles in the left half-plane, indicating a stable system. It is not oscillatory since there are no imaginary parts to the poles. The poles are: $s=0, -2, -3$. \\
-    - The right plot for \( Y_2(s) \) shows at minimum 1 pole in the right half-plane, meaning the system is unstable and will have an exponentially growing response. It is oscillatory since there are imaginary parts to the poles. The poles are: $s=0, 2, 1+2i, 1-2i$.
+    - The left plot shows the pole-zero locations for \( Y_1(s) \), which has poles in the left half-plane, indicating a stable system (converging). It is not oscillatory since there are no imaginary parts to the poles. The poles are: $s=0, -2, -3$. \\
+    - The right plot for \( Y_2(s) \) shows at minimum 1 pole in the right half-plane, meaning the system is unstable and will have an exponentially growing response (diverging). It is oscillatory since there are imaginary parts to the poles. The poles are: $s=0, 2, 1+2i, 1-2i$.
 
     \begin{figure}[H]
       \centering
@@ -54,7 +54,7 @@ Baoze Lin, Hady Ibrahim
       \label{fig:figure14} 
     \end{figure}
 
-    The calculations confirm that \( Y_1(s) \) settles to a finite negative value, whereas \( Y_2(s) \), despite being unstable in impulse response, has a well-defined steady-state when analyzed using Final Value Theorem.
+    The calculations confirm that \( Y_1(s) \) settles to a finite negative value, whereas \( Y_2(s) \) is a diverging system so FVT does not apply in this case. The final value does not exist for \( Y_2(s) \). We calculated the FVT anyway just to show that it will not always come up with infinity and you must know the system's stability.
 
     % ANSWER TO 1.3
     \item
@@ -341,7 +341,7 @@ Baoze Lin, Hady Ibrahim
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=1\textwidth]{Figures/figure4-3.png}
+      \includegraphics[width=0.9\textwidth]{Figures/figure4-3.png}
       \caption{Comparison of Linearized and Nonlinearized Pendulum Models}
       \label{fig:figure44}
     \end{figure}
@@ -351,38 +351,56 @@ Baoze Lin, Hady Ibrahim
 
     % ANSWER TO 4.4
     \item 
-    The transfer functions are derived below:
+    The transfer functions are derived in the following figures. We firstly can derive the transfer functions $\frac{C'_A(s)}{C'_{A0}(s)}$ and $\frac{T'(s)}{Q'(s)}$. Since the Laplace of the linearized equation contains the inputs $C'_{A0}$ and $Q'$, we can derive the transfer functions by isolating the Laplace of the output. We can omit the other input as we are isolating a transfer function.
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=\textwidth]{Figures/handcalc/figure4-4a.png}
-      \caption{Transfer Functions for the Non-Isothermal Stirred Tank Bioreactor}
+      \includegraphics[width=0.8\textwidth]{Figures/handcalc/figure4-4a.png}
+      \caption{Transfer Functions $\frac{C'_A(s)}{C'_{A0}(s)}$ and $\frac{T'(s)}{Q'(s)}$}
       \label{fig:figure45}
     \end{figure}
 
+    The next transfer functions are more complicated as the inputs don't exist in the linearized equation for the output. In order to see the effect of the input on the output variable for transfer functions $\frac{C'_A(s)}{Q'(s)}$ and $\frac{T'(s)}{C'_{A0}(s)}$, we must isolate the equations for $C'_A(s)$ and $T'(s)$, and then substitute them into the other. We also simplify the constants into variables for easier calculation and legibility.
+
     \begin{figure}[H]
       \centering
-      \includegraphics[width=\textwidth]{Figures/handcalc/figure4-4b.png}
-      \caption{Transfer Functions for the Non-Isothermal Stirred Tank Bioreactor}
+      \includegraphics[width=0.8\textwidth]{Figures/handcalc/figure4-4b.png}
+      \caption{Deriving Transfer Functions $\frac{C'_A(s)}{Q'(s)}$ and $\frac{T'(s)}{C'_{A0}(s)}$ Part 1}
       \label{fig:figure46}
     \end{figure}
+
+    \pagebreak
+
+    Substituting the equations for $C'_A(s)$ and $T'(s)$ into the other, we can derive the transfer functions $\frac{C'_A(s)}{Q'(s)}$ and $\frac{T'(s)}{C'_{A0}(s)}$. 
 
     \begin{figure}[H]
       \centering
       \includegraphics[width=\textwidth]{Figures/handcalc/figure4-4c.png}
-      \caption{Transfer Functions for the Non-Isothermal Stirred Tank Bioreactor}
+      \caption{Deriving Transfer Functions $\frac{C'_A(s)}{Q'(s)}$ and $\frac{T'(s)}{C'_{A0}(s)}$ Part 2}
       \label{fig:figure47}
     \end{figure}
+
+    \pagebreak
+
+    We can then substitute the original constants back into the transfer functions to get the final transfer functions. The transfer functions are shown below:
 
     \begin{figure}[H]
       \centering
       \includegraphics[width=\textwidth]{Figures/handcalc/figure4-4d.png}
-      \caption{Transfer Functions for the Non-Isothermal Stirred Tank Bioreactor}
+      \caption{Final Transfer Functions $\frac{C'_A(s)}{Q'(s)}$ and $\frac{T'(s)}{C'_{A0}(s)}$}
       \label{fig:figure48}
     \end{figure}
+    
+    \pagebreak
 
+    With these new transfer functions, we can relate the inputs $C'_{A0}$ and $Q'$ to the outputs $C'_A$ and $T'$ in the block diagram. Since we are required to relate the $C_{A0}(s)$ and $Q(s)$, we first subtract the equilibrium value and then we also add the equilibrium value back in the end to get the final transfer functions.
 
-
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{Figures/handcalc/figure4-4e.png}
+      \caption{Block Diagrams Relating $C_{A0}(s)$ and $Q(s)$ to $C_A(s)$ and $T(s)$}
+      \label{fig:figure49}
+    \end{figure}
 
 
   \end{enumerate}
