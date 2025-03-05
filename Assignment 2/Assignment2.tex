@@ -334,11 +334,10 @@ Baoze Lin, Hady Ibrahim
       \label{fig:figure43}
     \end{figure}
 
-    
 
     % ANSWER TO 4.3
     \item
-    The linearized and nonlinearized models were simulated in Matlab to compare their responses. The linearized model is a good approximation for small deviations from the equilibrium point, but the nonlinear model is necessary for larger deviations.
+    The linearized and nonlinearized models were simulated in Matlab to compare their responses. We expect the linearized model to be a good approximation for small deviations from the equilibrium point.
 
     \begin{figure}[H]
       \centering
@@ -346,6 +345,9 @@ Baoze Lin, Hady Ibrahim
       \caption{Comparison of Linearized and Nonlinearized Pendulum Models}
       \label{fig:figure44}
     \end{figure}
+
+    The linearized model is accurate for small deviations from the steady state. However, for larger deviations, the linearized model becomes less accurate, particularly for the concentration of \( C_A \), as the nonlinear effects of the reaction rate (\( k_0 C_A e^{-\frac{E}{RT}} \)) become significant. The nonlinear system captures the full reaction, while the linearized system approximates these dynamics but cannot fully capture the nonlinear interactions between \( C_A \) and \( T \). The linearized model is useful for control system design and small perturbations around the steady state, where it provides a good approximation of the system dynamics. However, for larger perturbations, such as significant cooling or heating, the nonlinear model should be used to ensure accurate predictions.
+
 
     % ANSWER TO 4.4
     \item 

@@ -33,11 +33,11 @@ fprintf('Steady-state T_bar = %.2f K\n', T_bar);
 % reference: https://www.mathworks.com/help/optim/ug/fsolve.html
 
 %% 4.3
-% Parameters
+% parameters
 F = 0.2; % [m^3/min]
 V = 0.5; % [m^3]
 R = 8.314; % [kJ/kmol·K]
-T0 = 352.6634; % [K]
+T0_actual = 352.6634; % [K]
 DeltaH = -4.78e4; % [kJ/kmol]
 k0 = 65e9; % [min^-1]
 E = 8.314e4; % [kJ/kmol]
@@ -48,50 +48,50 @@ Q_bar = 0; % [kJ/min]
 CA_bar = 0.0199; % [kmol/m^3]
 T_bar = 448.09; % [K]
 
-% Derived constants
+% derived constants for linearized system
 k_exp = k0 * exp(-E / (R * T_bar)); % Reaction rate constant at steady state
 beta = k0 * CA_bar * exp(-E / (R * T_bar)) * (E / (R * T_bar^2)); % Temp sensitivity
 gamma = k0 * DeltaH / (rho * cp) * exp(-E / (R * T_bar)); % Heat release term
 alpha = k0 * CA_bar * DeltaH / (rho * cp) * exp(-E / (R * T_bar)) * (E / (R * T_bar^2)); % Coupling term
 
-% Initial conditions
+% initial conditions
 CA0 = CA_bar; % Steady-state initial condition for CA
 T0 = T_bar; % Steady-state initial condition for T
 CA_prime0 = 0; % Initial deviation for CA'
 T_prime0 = 0; % Initial deviation for T'
 
-% Simulation time
-tspan = [0, 50]; % Simulate for 50 minutes
+% simulation time
+tspan = [0, 20]; % Simulate for 50 minutes
 
-% Inputs
+% inputs
 CA0_input = CA0_bar; % Constant feed concentration
 Q_input = -1000; % Cooling applied
 
-% Nonlinear system ODEs
+% nonlinear system ODEs
 nonlinear_odes = @(t, y) [
     F/V * (CA0_input - y(1)) - k0 * y(1) * exp(-E / (R * y(2))); % dCA/dt
-    F/V * (T0 - y(2)) - k0 * y(1) * DeltaH / (rho * cp) * exp(-E / (R * y(2))) + Q_input / (rho * cp * V) % dT/dt
+    F/V*T0_actual - F/V * y(2) - (k0 * y(1) * DeltaH * exp(-E / (R * y(2)))) / (rho * cp)  + Q_input / (rho * cp * V) % dT/dt
 ];
 
-% Linearized system ODEs
+% linearized system ODEs
 linearized_odes = @(t, y) [
-    F/V * CA0_input - (F/V + k_exp) * y(1) - beta * y(2); % dCA'/dt
+    F/V * 0 - (F/V + k_exp) * y(1) - beta * y(2); % dCA'/dt
     -F/V * y(2) - gamma * y(1) - alpha * y(2) + Q_input / (rho * cp * V) % dT'/dt
 ];
 
-% Solve nonlinear system
+% solve nonlinear system
 [t_nl, y_nl] = ode45(nonlinear_odes, tspan, [CA0, T0]);
 
-% Solve linearized system
+% solve linearized system
 [t_lin, y_lin] = ode45(linearized_odes, tspan, [CA_prime0, T_prime0]);
 
-% Extract results
+% extract results
 CA_nl = y_nl(:, 1); % Nonlinear CA
 T_nl = y_nl(:, 2); % Nonlinear T
 CA_lin = y_lin(:, 1) + CA_bar; % Linearized CA (add steady-state value)
 T_lin = y_lin(:, 2) + T_bar; % Linearized T (add steady-state value)
 
-% Plot results
+% plot results
 figure;
 subplot(2, 1, 1);
 plot(t_nl, CA_nl, 'b', 'LineWidth', 1.5); hold on;
