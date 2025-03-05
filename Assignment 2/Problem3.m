@@ -1,37 +1,34 @@
-%% 3.3
-% Load empirical data
-data = csvread('Empirical_Data.csv', 1, 0); % Skip the header row
-time = data(:, 2); % Extract the Time column
-y_data = data(:, 3); % Extract the Y column (measured voltage values)
+%% 3.3a - Optimize Parameters
+% load empirical data
+data = csvread('Empirical_Data.csv', 1, 0);
+time = data(:, 2);
+y_data = data(:, 3);
 
-% Define constants
-K = 10; % Process gain
-tau_range = 0.1:0.01:1; % Range for tau
-zeta_range = 0.1:0.01:1; % Range for zeta
+% define constants
+K = 10; 
+tau_range = 0.1:0.01:1; 
+zeta_range = 0.1:0.01:1; 
 
-% Initialize variables
-min_SSE = inf; % Start with a very large SSE
+% initialize variables
+min_SSE = inf; % starting with an infinite SSE, any real number should be less than this
 optimal_tau = 0;
 optimal_zeta = 0;
 
-% Loop over tau and zeta
+% double for loop over tau and zeta, and calculate the SSE
 for tau = tau_range
     for zeta = zeta_range
-        % Define transfer function
+        % define transfer function
         num = [K];
         den = [tau^2, 2*zeta*tau, 1];
         G = tf(num, den);
         
-        % Simulate step response
+        % simulate step response of 2 units
         [y_model, t_model] = step(2 * G, time);
         
-        % Interpolate model response to match data time points
-        y_model_interp = interp1(t_model, y_model, time, 'linear', 'extrap');
+        % compute SSE
+        SSE = sum((y_model - y_data).^2);
         
-        % Compute SSE
-        SSE = sum((y_model_interp - y_data).^2);
-        
-        % Update optimal parameters if SSE is smaller
+        % update optimal parameters if SSE is smaller
         if SSE < min_SSE
             min_SSE = SSE;
             optimal_tau = tau;
@@ -40,46 +37,55 @@ for tau = tau_range
     end
 end
 
-% Display optimal parameters
+% display optimal parameters
 fprintf('Optimal tau: %.2f\n', optimal_tau);
 fprintf('Optimal zeta: %.2f\n', optimal_zeta);
+fprintf('Minimum SSE: %.4f\n', min_SSE);
 
-% Plot results
-num = [K];
+%% 3.3b - Graph
+% plot results
+num = K;
 den = [optimal_tau^2, 2*optimal_zeta*optimal_tau, 1];
 G_optimal = tf(num, den);
 [y_optimal, t_optimal] = step(2 * G_optimal, time);
 
 figure;
 plot(time, y_data, 'o', 'DisplayName', 'Empirical Data'); hold on;
-plot(t_optimal, y_optimal, '-', 'DisplayName', 'Model Response');
+plot(t_optimal, y_optimal, '-', 'DisplayName', 'Optimized Model Response');
 xlabel('Time (s)');
-ylabel('Voltage (V)');
+ylabel('Voltage (mV)');
 legend;
-title('Empirical Data vs. Model Response');
+title('Empirical Data vs. Optimized Model Response');
+
+% annotate graph
+annotation_text = sprintf('Optimal \\tau: %.2f\nOptimal \\zeta: %.2f\nMin SSE: %.4f', ...
+                          optimal_tau, optimal_zeta, min_SSE);
+text(0.7 * max(time), 0.2 * max(y_data), annotation_text, 'FontSize', 10, 'BackgroundColor', 'white');
+
+% Save the figure
 saveas(gcf, 'Figures/figure3-3.png');
 
 %% 3.4
-% Given constants
-rho = 0.62; % Fluid density
-A = 0.20; % Catheter cross-sectional area
-L = 6; % Catheter length
-K = 10; % Process gain
+% given constants
+rho = 0.62; 
+A = 0.20; 
+L = 6; 
+K = 10; % 
 
-% Optimal parameters from 3.3
-tau = optimal_tau; % Optimal time constant
-zeta = optimal_zeta; % Optimal damping ratio
+% optimal parameters from 3.3
+tau = optimal_tau; 
+zeta = optimal_zeta; 
 
-% Calculate c
+% calculate c
 c = (rho * A * L) / (tau^2);
 
-% Calculate b
+% calculate b
 b = 2 * zeta * tau * c;
 
-% Calculate K_P->V
+% calculate K_P->V
 K_P_to_V = (K * c) / A;
 
-% Display results
+% display results
 fprintf('Parameter c: %.4f\n', c);
 fprintf('Parameter b: %.4f\n', b);
 fprintf('Parameter K_P->V: %.4f\n', K_P_to_V);

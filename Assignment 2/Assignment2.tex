@@ -163,6 +163,8 @@ Baoze Lin, Hady Ibrahim
 
   \end{enumerate}
 
+\pagebreak
+
 \item Question 3
   \begin{enumerate}
     % ANSWER TO 3.1
@@ -173,19 +175,19 @@ Baoze Lin, Hady Ibrahim
     \frac{V(s)}{P(s)} = \frac{A K_{P \to V}}{\rho A L s^2 + b s + c}
     \]
 
-    To rewrite it in standard form, divide the numerator and denominator by \(c\):
+    To rewrite it in standard form, divide the numerator and denominator by \(c\) to isolate the 1 in the denominator:
 
     \[
     \frac{V(s)}{P(s)} = \frac{\frac{A K_{P \to V}}{c}}{\frac{\rho A L}{c}s^2 + \frac{b}{c}s + 1}
     \]
 
-    Let:
+    We define the following from the standard form of a second order transfer function:
 
     \[
     K = \frac{A K_{P \to V}}{c}, \quad \tau^2 = \frac{\rho A L}{c}, \quad 2\zeta\tau = \frac{b}{c}
     \]
 
-    The transfer function in standard form becomes:
+    The transfer function in standard form becomes the below with the above definitions:
 
     \[
     \frac{V(s)}{P(s)} = \frac{K}{\tau^2 s^2 + 2\zeta\tau s + 1}
@@ -193,7 +195,7 @@ Baoze Lin, Hady Ibrahim
 
     % ANSWER TO 3.2
     \item
-    The process gain \(K\) relates the steady-state change in the output voltage (\(V(t)\)) to the steady-state change in the input pressure (\(P(t)\)). From both the step test diagram given in the assignment and also Empirical\_Data.csv, we observe the a steady-state output voltage of around 20 mV when the input pressure step test is 2 units. Since the process gain \(K\) is defined as:
+    The process gain \(K\) relates the steady-state change in the output voltage (\(V(t)\)) to the steady-state change in the input pressure (\(P(t)\)). From both the step test diagram given in the assignment and also Empirical\_Data.csv, we observe a steady-state output voltage of around 20 mV when the input pressure step test is 2 units. Since the process gain \(K\) is defined as:
 
     \[
     K = \frac{\Delta V}{\Delta P}
@@ -209,13 +211,13 @@ Baoze Lin, Hady Ibrahim
 
     % ANSWER TO 3.3
     \item
-    Using the Matlab code presented in Problem3.m, we can estimate the time constant \(\tau\) and damping ratio \(\zeta\) of the system using the approach described by the question. The optimized values are 0.61 for tau and 0.33 for zeta.
-
-    The quality of the fit is demonstrated below.
+    Using the Matlab code presented in Problem3.m, we can estimate the time constant \(\tau\) and damping ratio \(\zeta\) of the system using the approach described by the question -- a double for loop and a sum-of-squared-errors calculation. The code iterates through various values of \(\tau\) and \(\zeta\) to find the pair that minimizes the sum-of-squared-errors between the step test data and the transfer function model. \linebreak
+    
+    The optimized values are 0.61 for tau and 0.33 for zeta. They occur with a minimal sum-of-squared-errors of 43.0861. The quality of the fit is demonstrated below.
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.8\textwidth]{Figures/figure3-3.png}
+      \includegraphics[width=0.9\textwidth]{Figures/figure3-3.png}
       \caption{Fitting the Transfer Function to the Step Test Data}
       \label{fig:figure33}
     \end{figure}
@@ -234,7 +236,7 @@ Baoze Lin, Hady Ibrahim
         \rho = 0.62, \quad A = 0.20, \quad L = 6, \quad \tau = 0.61
         \]
         \[
-        c = \frac{0.62 \cdot 0.20 \cdot 6}{(0.61)^2} = \frac{0.744}{0.3721} \approx 2.00
+        c = \frac{0.62 \cdot 0.20 \cdot 6}{(0.61)^2} = \frac{0.744}{0.3721} = 1.9995 \approx 2.00
         \]
     
         \item \textbf{Parameter \(b\):}
@@ -246,7 +248,7 @@ Baoze Lin, Hady Ibrahim
         \zeta = 0.33, \quad \tau = 0.61, \quad c = 2.00
         \]
         \[
-        b = 2 \cdot 0.33 \cdot 0.61 \cdot 2.00 = 0.8052 \approx 0.81
+        b = 2 \cdot 0.33 \cdot 0.61 \cdot 2.00 = 0.8050 \approx 0.81
         \]
     
         \item \textbf{Parameter \(K_{P \to V}\):}
@@ -263,7 +265,7 @@ Baoze Lin, Hady Ibrahim
         K = 10, \quad c = 2.00, \quad A = 0.20
         \]
         \[
-        K_{P \to V} = \frac{10 \cdot 2.00}{0.20} = \frac{20}{0.20} = 100
+        K_{P \to V} = \frac{10 \cdot 2.00}{0.20} = \frac{20}{0.20} = 99.9731 \approx 100
         \]
     \end{enumerate}
     
@@ -274,6 +276,8 @@ Baoze Lin, Hady Ibrahim
     \]
 
   \end{enumerate}
+
+  \pagebreak
 
   \item Question 4
     \begin{enumerate}
