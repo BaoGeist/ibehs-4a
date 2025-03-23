@@ -275,8 +275,23 @@ Baoze Lin, Hady Ibrahim
 
     The closed-loop gain is given by \( K = 0.05s + 1 \), which means the gain varies with frequency rather than being a simple constant. Evaluating it at steady-state (\( s = 0 \)), we get \( K(0) = 1 \), which confirms that the system should track a step input without steady-state error. Over time, our system approaches 1 as expected.
 
+    % Answer to 1.9
+    \item
+    The closed-loop system for integral times \( \tau_I = {0.01, 0.05, 0.1, 0.5, 1, 2} \) are shown in Figure \ref{fig:figure1_8}. As the integral time decreases, the system has an increased speed of response but also a higher relative overshoot.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.8\textwidth]{Figures/figure1_9.png}
+      \caption{Closed-loop step response for different integral times}
+      \label{fig:figure1_8}
+    \end{figure}
+
+    From comparing the different integral time constants, we can see that \(\tau_I\) dictates in a PI controller the trade-off between response speed and stability. Small values (e.g., \(\tau_I = 0.01\)) yield fast responses but can cause excessive overshoot and oscillations. Larger values (e.g., \(\tau_I = 2\)) improve stability with less overshoot but result in slower responses. Tuning \(\tau_I\) aims to find an optimal value, like \(\tau_I = 0.4\), that balances speed and stability according to the specific process requirements. This is due to the mathematical relationship between \(\tau_I\) and the damping factor and time constant, which affect the system's response characteristics.
+
 
   \end{enumerate}
+
+  
 
 \pagebreak
 
