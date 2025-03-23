@@ -202,6 +202,80 @@ Baoze Lin, Hady Ibrahim
 
     Therefore, the controller gain \(K_c\) must be greater than approximately 3.83 to achieve an offset less than 0.08.
 
+    % Answer to 1.7
+    \item
+    We change from the proportional controller to the proportional-integral controller by adjusting the transfer function \(G_c(s)\) to include an integral term. The transfer function for the PI controller is given by:
+
+    \[
+    G_c(s) = K_c \left(1 + \frac{1}{\tau_I s}\right)
+    \]
+
+    Where \(K_c = 3\) and \(\tau_I = 0.05\).  The response of the system is shown in Figure \ref{fig:figure1_7}.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.8\textwidth]{Figures/figure1_7.png}
+      \caption{Closed-loop step response with a PI controller}
+      \label{fig:figure1_7}
+    \end{figure}
+
+    % Answer to 1.8
+    \item
+    Given the below two transfer functions in our system:
+
+    \[
+    G_c = K_c \left( 1 + \frac{1}{\tau_I s} \right)
+    \]
+
+    \[
+    G_p = \frac{6}{s+2} = \frac{K_p}{\tau_p s + 1}
+    \]
+
+    where,
+
+    \[
+    K_p = 3, \quad \tau_p = \frac{1}{2}, \quad K_c = 3, \quad \tau_I = 0.05
+    \]
+
+    Together, the closed-loop transfer fucntion for the system becomes:
+
+    \[
+    \frac{Y'(s)}{R'(s)} = \frac{\tau_I s + 1}{\frac{\tau_I \tau_p}{K_c K_p} s^2 + \tau_I \frac{(1 + K_c K_p)}{K_c K_p} s + 1}
+    \]
+
+    We can use the equations as presented in the lecture to calculate the time constant \( \tau \) and the damping factor \( \zeta \).
+
+    \[
+    \tau = \sqrt{\frac{\tau_I \tau_p}{K_c K_p}} = \sqrt{\frac{(0.05)(\frac{1}{2})}{(3)(3)}}
+    = \sqrt{0.00278}
+    \]
+
+    \[
+    \tau \approx 0.0527
+    \]
+
+    \[
+    \zeta = \frac{1}{2} (1 + K_c K_p) \sqrt{\frac{\tau_I}{K_c K_p \tau_p}}
+ = \frac{1}{2} (1 + 9) \sqrt{\frac{0.05}{(3)(3)(\frac{1}{2})}}
+    \]
+
+    \[
+    \zeta \approx 0.526
+    \]
+
+    We also derive the closed-loop gain \( K \).
+
+    \[
+    K = \tau_I s + 1 = 0.05s + 1
+    \]
+
+    The calculated time constant is approximately \( \tau \approx 0.0527 \), which suggests the system should settle relatively quickly. The expected settling time, approximately \( 4\tau = 0.21s \), can be seen in Figure \ref{fig:figure1_7}, where it settles around that point. \linebreak
+
+    The damping factor was found to be \( \zeta \approx 0.526 \), suggesting a slightly underdamped response. This means the system should exhibit small oscillations but should not overshoot excessively, as observed in the above figure. \linebreak
+
+    The closed-loop gain is given by \( K = 0.05s + 1 \), which means the gain varies with frequency rather than being a simple constant. Evaluating it at steady-state (\( s = 0 \)), we get \( K(0) = 1 \), which confirms that the system should track a step input without steady-state error. Over time, our system approaches 1 as expected.
+
+
   \end{enumerate}
 
 \pagebreak
