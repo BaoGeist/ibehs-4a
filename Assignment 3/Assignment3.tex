@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parindent}{0in}
+\setlength{\parskip}{\baselineskip}
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx, hyperref, float}
+
+\begin{document}
+
+IBEHS 4A03 \hfill Assignment \#3\\
+Baoze Lin, Hady Ibrahim
+
+\hrulefill
+
+% Custom numbering for subparts (e.g., 2.1, 2.2)
+\renewcommand{\theenumii}{\arabic{enumi}.\arabic{enumii}}
+
+\begin{enumerate}
+\item Question 1
+  \begin{enumerate}
+    % Answer to 1.1
+    \item document
+    The open-loop step response of the system is shown in the Simulink model (Figure \ref{fig:figure1_1}) below with the response shown in Figure \ref{fig:figure1_2}.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.3\textwidth]{Figures/Models/model1_1.png}
+      \caption{Simulink model of the open-loop step response}
+      \label{fig:figure1_1}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth]{Figures/figure1_1.png}
+      \caption{Open-loop step response}
+      \label{fig:figure1_2}
+    \end{figure}
+
+    To identify the gain and time constant for this system, we can rearrange the transfer function to isolate the gain K and time constant $\tau$:
+
+    The given transfer function is:
+    \[
+    G_p(s) = \frac{6}{s + 2}
+    \]
+
+    To express this in the standard first-order form, which is:
+    \[
+    G(s) = \frac{K}{\tau s + 1}
+    \]
+    where \( K \) is the gain and \( \tau \) is the time constant.
+
+    We rearrange \( G_p(s) \) as follows:
+    \[
+    G_p(s) = \frac{6}{2(\frac{1}{2}s + 1)} = \frac{3}{\frac{1}{2}s + 1}
+    \]
+
+    Thus, we identify the gain \( K \) and the time constant \( \tau \) as:
+    \[
+    K = 3, \quad \tau = \frac{1}{2}
+    \]
+    
+  \end{enumerate}
+
+\pagebreak
+
+\item Question 2
+  \begin{enumerate}
+    \item placeholder
+  \end{enumerate}
+
+\end{enumerate}
+
+\end{document}
