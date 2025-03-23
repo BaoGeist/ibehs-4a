@@ -92,6 +92,56 @@ Baoze Lin, Hady Ibrahim
       \label{fig:figure1_5}
     \end{figure}
 
+    % Answer to 1.4
+    \item
+    The closed-loop transfer function \( T(s) \) is given by:
+    \[
+    T(s) = \frac{Y'(s)}{R'(s)} = \frac{G_c(s)G_p(s)}{1 + G_c(s)G_p(s)}
+    \]
+
+    Where \( G_c(s) = K_c = 4 \) (proportional controller) and \( G_p(s) = \frac{6}{s+2} \) (plant transfer function). Substituting the transfer functions:
+    \[
+    T(s) = \frac{4 \cdot \frac{6}{s+2}}{1 + 4 \cdot \frac{6}{s+2}}
+    \]
+
+    Simplifying:
+    \[
+    T(s) = \frac{\frac{24}{s+2}}{1 + \frac{24}{s+2}} = \frac{24}{s+2+24} = \frac{24}{s+26}
+    \]
+
+    Thus, the closed-loop transfer function is:
+    \[
+    T(s) = \frac{24}{s+26}
+    \]
+
+    We then apply the Final Value Theorem, which states that:
+    \[
+    \lim_{t \to \infty} y(t) = \lim_{s \to 0} sY(s)
+    \]
+
+    For a unit step input \( R'(s) = \frac{1}{s} \), the Laplace transform of the output is:
+    \[
+    Y'(s) = T(s)R'(s) = \frac{24}{s+26} \cdot \frac{1}{s}
+    \]
+
+    Applying the FVT:
+    \[
+    \lim_{t \to \infty} y(t) = \lim_{s \to 0} s \cdot \frac{24}{(s+26)s} = \lim_{s \to 0} \frac{24}{s+26} = \frac{24}{26} = \frac{12}{13} \approx 0.923
+    \]
+
+    The steady-state value of the output is approximately \( 0.923 \). Since the system is operating on displacement from a rock assembly, the set point is 0. Thus, the offset of this system is approximately \( 0.923 \). Referring to the step response in Figure \ref{fig:figure1_5}, we can see the offset is approximately \( 0.923 \).
+
+    % Answer to 1.5
+    \item
+    THe closed-loop system for controller gains $K_c = {0.25, 1, 2, 4, 10}$ are shown in Figure \ref{fig:figure1_6}. Observing the results, we can see that the offset of the system decreases as the proportional gain increases.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.8\textwidth]{Figures/figure1_5.png}
+      \caption{Closed-loop step response for different controller gains}
+      \label{fig:figure1_6}
+    \end{figure}
+
   \end{enumerate}
 
 \pagebreak
