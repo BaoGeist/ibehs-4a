@@ -80,7 +80,7 @@ Baoze Lin, Hady Ibrahim
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.7\textwidth]{Figures/Models/model1_3.png}
+      \includegraphics[width=0.5\textwidth]{Figures/Models/model1_3.png}
       \caption{Simulink model of the closed-loop feedback control with a proportional controller}
       \label{fig:figure1_4}
     \end{figure}
@@ -129,11 +129,13 @@ Baoze Lin, Hady Ibrahim
     \lim_{t \to \infty} y(t) = \lim_{s \to 0} s \cdot \frac{24}{(s+26)s} = \lim_{s \to 0} \frac{24}{s+26} = \frac{24}{26} = \frac{12}{13} \approx 0.923
     \]
 
-    The steady-state value of the output is approximately \( 0.923 \). Since the system is operating on displacement from a rock assembly, the set point is 0. Thus, the offset of this system is approximately \( 0.923 \). Referring to the step response in Figure \ref{fig:figure1_5}, we can see the offset is approximately \( 0.923 \).
+    The steady-state value of the output is approximately \( 0.923 \). Since the system is operating on displacement from a rock assembly with a step input, the set point is 1. Thus, the offset of this system is approximately \( 0.923 \). Referring to the step response in Figure \ref{fig:figure1_5}, we can see the offset is approximately \( 1 - 0.923 = 0.077\).
+
+    \pagebreak
 
     % Answer to 1.5
     \item
-    THe closed-loop system for controller gains $K_c = {0.25, 1, 2, 4, 10}$ are shown in Figure \ref{fig:figure1_6}. Observing the results, we can see that the offset of the system decreases as the proportional gain increases.
+    The closed-loop system for controller gains $K_c = {0.25, 1, 2, 4, 10}$ are shown in Figure \ref{fig:figure1_6}. Observing the results, we can see that the offset of the system decreases as the proportional gain increases.
 
     \begin{figure}[H]
       \centering
@@ -141,6 +143,64 @@ Baoze Lin, Hady Ibrahim
       \caption{Closed-loop step response for different controller gains}
       \label{fig:figure1_6}
     \end{figure}
+
+    % Answer to 1.6
+    \item
+    We want to find the controller gain \(K_c\) such that the offset is less than 0.08. The offset is given by:
+
+    \[
+    \text{Offset} = \lim_{t \to \infty} (r(t) - y(t))
+    \]
+
+    Using the Final Value Theorem:
+
+    \[
+    \text{Offset} = \lim_{s \to 0} \left(1 - \frac{K_c \cdot G_p}{1 + K_c \cdot G_p}\right)
+    \]
+
+    With \(G_p = \frac{6}{s+2}\), we evaluate at \(s=0\):
+
+    \[
+    \text{Offset} = 1 - \frac{K_c \cdot \frac{6}{0+2}}{1 + K_c \cdot \frac{6}{0+2}} = 1 - \frac{3K_c}{1 + 3K_c}
+    \]
+
+    We require that the offset be less than 0.08:
+
+    \[
+    0.08 > 1 - \frac{3K_c}{1 + 3K_c}
+    \]
+
+    Rearranging the inequality:
+
+    \[
+    \frac{3K_c}{1 + 3K_c} > 1 - 0.08 = 0.92
+    \]
+
+    \[
+    3K_c > 0.92(1 + 3K_c)
+    \]
+
+    \[
+    3K_c > 0.92 + 2.76K_c
+    \]
+
+    \[
+    (3 - 2.76)K_c > 0.92
+    \]
+
+    \[
+    0.24K_c > 0.92
+    \]
+
+    \[
+    K_c > \frac{0.92}{0.24}
+    \]
+
+    \[
+    K_c > 3.8333...
+    \]
+
+    Therefore, the controller gain \(K_c\) must be greater than approximately 3.83 to achieve an offset less than 0.08.
 
   \end{enumerate}
 
