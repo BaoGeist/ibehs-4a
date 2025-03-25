@@ -331,38 +331,37 @@ Baoze Lin, Hady Ibrahim
       \label{fig:figure1_13}
     \end{figure}
 
+    % Answer to 1.14
+    \item With the newly added sensor, we get the following result with our previously optimized system in Figure \ref{fig:figure1_14} from the model shown in Figure \ref{fig:figure1_15}. Compared to the ideal scenario where there was no sensor dynamics (Figure \ref{fig:figure1_13}), the system now has more oscillations. This is due to the sensor dynamics introducing a delay in the feedback loop, causing the system to overshoot and oscillate before stabilizing.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure1_14.png}
+      \caption{System response with sensor dynamics}
+      \label{fig:figure1_14}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.8\textwidth]{Figures/Models/model1_14.png}
+      \caption{Simulink model of the system with sensor dynamics}
+      \label{fig:figure1_15}
+    \end{figure}
+
+    These are no longer the most optimal tuning parameters for this system. We need to reduce the oscillations while still keeping the time constant low. As we learned from lecture, we can achieve less of an overshoot by decreasing $K_c$ or increasing $\tau_I$. We can change these parameters independently of each other at each tuning iteration to isolate their effects on the system. We can then observe the system's response and adjust the parameters accordingly to achieve the desired response. \linebreak
+
+    Initially, we decreased the $K_c$ value from 5 to 3, this reduced the overshoot by a bit but not too much. We then incremented the $tau_I$ to 0.4, which decreased the overshoot even more. $K_c$ was then reduced to just 1, where we saw minimal overshoot, however this new overshoot caused the settling time to be prolonged. To fix this, we went through one bonus tuning iteration increasing the $\tau_I$ to reduce overshoot. Overall, the best tuning parameters ended up being $K_c = 1$ and $\tau_I = 0.5$. As expected, these final tuning parameters involved decreasing $K_c$ and increasing $\tau_I$.
+    
+    All three + one iterations plus the original reponse is shown below in Figure \ref{fig:figure1_16}. 
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure1_15.png}
+      \caption{System response with sensor dynamics and different $K_c$ values}
+      \label{fig:figure1_16}
+    \end{figure}
+
   \end{enumerate}
-
-  % Answer to 1.14
-  \item
-  With the newly added sensor, we get the following result with our previously optimized system in Figure \ref{fig:figure1_14} from the model shown in Figure \ref{fig:figure1_15}. Compared to the ideal scenario where there was no sensor dynamics (Figure \ref{fig:figure1_13}), the system now has more oscillations. This is due to the sensor dynamics introducing a delay in the feedback loop, causing the system to overshoot and oscillate before stabilizing.
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Figures/figure1_14.png}
-    \caption{System response with sensor dynamics}
-    \label{fig:figure1_14}
-  \end{figure}
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Models/model1_14.png}
-    \caption{Simulink model of the system with sensor dynamics}
-    \label{fig:figure1_15}
-  \end{figure}
-
-  These are no longer the most optimal tuning parameters for this system. We need to reduce the oscillations while still keeping the time constant low. As we learned from lecture, we can achieve less of an overshoot by decreasing $K_c$ or increasing $\tau_I$. We can change these parameters independently of each other at each tuning iteration to isolate their effects on the system. We can then observe the system's response and adjust the parameters accordingly to achieve the desired response. \linebreak
-
-  Initially, we decreased the $K_c$ value from 5 to 3, this reduced the overshoot by a bit but not too much. We then incremented the $tau_I$ to 0.4, which decreased the overshoot even more. $K_c$ was then reduced to just 1, where we saw minimal overshoot, however this new overshoot caused the settling time to be prolonged. To fix this, we went through one bonus tuning iteration increasing the $\tau_I$ to reduce overshoot. Overall, the best tuning parameters ended up being $K_c = 1$ and $\tau_I = 0.5$. As expected, these final tuning parameters involved decreasing $K_c$ and increasing $\tau_I$.
-  
-  All three + one iterations plus the original reponse is shown below in Figure \ref{fig:figure1_16}. 
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Figures/figure1_15.png}
-    \caption{System response with sensor dynamics and different $K_c$ values}
-    \label{fig:figure1_16}
-  \end{figure}
 
 \pagebreak
 
