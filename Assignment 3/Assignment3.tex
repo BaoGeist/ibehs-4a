@@ -368,7 +368,108 @@ Baoze Lin, Hady Ibrahim
 
 \item Question 2
   \begin{enumerate}
-    \item placeholder
+    % 2.1
+    \item To assess the stability of the open-loop system, we examined the poles of the system's transfer functions derived from laplacing (true verb) the linearized model. (Figure \ref{fig:figure2_1}) shows the TFs for the system found from A2 solutions doc:
+        
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.8\textwidth]{Figures/figure2_1.png}
+      \caption{Transfer functions for the system.}
+      \label{fig:figure2_1}
+    \end{figure}
+
+    The relevant transfer functions, based on the deviation variables, are:
+
+    \[
+    G_1(s) = \frac{\beta}{s - \alpha}, \quad
+    G_2(s) = \frac{\gamma}{s - \alpha}, \quad
+    G_3(s) = \frac{\delta}{s - \epsilon}, \quad
+    G_4(s) = \frac{\eta}{s - \epsilon}
+    \]
+    
+    Using MATLAB and the given reactor parameters, the following values were computed:
+    
+    \begin{align*}
+    \alpha &= -13.606483 \\
+    \beta  &= -0.013089 \\
+    \gamma &= 0.400000 \\
+    \delta &= 1918.753467 \\
+    \epsilon &= 1.501699 \\
+    \eta &= 0.006079
+    \end{align*}
+    
+    This gives us the following pole locations:
+    
+    \begin{itemize}
+        \item Poles of \( G_1(s) \) and \( G_2(s) \): \( s = -13.606483 \)
+        \item Poles of \( G_3(s) \) and \( G_4(s) \): \( s = 1.501699 \)
+    \end{itemize}
+    
+    Since the poles of \( G_3(s) = \frac{T'(s)}{C_A'(s)} \) and \( G_4(s) = \frac{T'(s)}{Q'(s)} \) both have positive real parts, the temperature deviation \( T'(s) \) exhibits an unstable response in open-loop. Furthermore, from the structure of the system, the state \( T'(s) \) is an input into \( G_1(s) \), which feeds into \( C_A'(s) \). Thus, instability in \( T'(s) \) directly destabilizes \( C_A'(s) \) as well. Thus it is an unstable open-loop system.
+    
+    \clearpage
+    % 2.2
+    \item Using the TFs found in 2.1 (see Figure \ref{fig:figure2_1}), we computed the math below to find and build the block diagram (Figure \ref{fig:figure2_2}).
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{Figures/figure2_2.png}
+      \caption{Derivation of block diagram where \( C_A'(s) \) is the output, \( C_Ao'(s) \) is the disturbance, and \( Q'(s) \) is the input determined by the controller.}
+      \label{fig:figure2_2}
+    \end{figure}
+
+    % 2.3
+    \item From the derived closed-loop block diagram in Figure \ref{fig:figure2_2}, the open-loop transfer function from the heat input \(Q'(s)\) to the outlet concentration \(C_A'(s)\) is:
+
+    \[
+    \frac{C_A'(s)}{Q'(s)} = \frac{G_1(s) G_4(s)}{1 - G_1(s) G_3(s)}
+    \]
+    
+    We use the previously computed parameter values from Matlab to see what the gain will be by inspection:
+    
+    \[
+    \begin{aligned}
+    \beta &= -0.013089 \quad &\Rightarrow G_1(s) &= \frac{\beta}{s - \alpha} \\
+    \delta &= 1918.753467 \quad &\Rightarrow G_3(s) &= \frac{\delta}{s - \epsilon} \\
+    \eta &= 0.006079 \quad &\Rightarrow G_4(s) &= \frac{\eta}{s - \epsilon}
+    \end{aligned}
+    \]
+    
+    \medskip
+    
+    \noindent\textbf{Sign of the Numerator \(G_1 G_4\)}  
+    \[
+    \beta < 0, \quad \eta > 0 \quad \Rightarrow \quad G_1 G_4 < 0
+    \]
+    
+    \noindent\textbf{Sign of the Denominator \(1 - G_1 G_3\)}  
+    \[
+    \beta < 0, \quad \delta > 0 \quad \Rightarrow \quad G_1 G_3 < 0 \quad \Rightarrow \quad 1 - G_1 G_3 > 1
+    \]
+    
+    \noindent\textbf{Thus:}
+    \[
+    \frac{C_A'(s)}{Q'(s)} = \frac{\text{negative}}{\text{positive}} = \textbf{negative}
+    \]
+    
+    \medskip
+    
+    \noindent The process gain from \(Q'(s)\) to \(C_A'(s)\) is clearly negative based on the math. This implies that increasing the heat input results in a decrease in the outlet concentration \(C_A'\), which makes sense with the exothermic nature of the reaction — increasing heat raises temperature, which increases reaction rate, therefore consuming more of \(A\). Also using Matlab's dcgain function, we found the gain would be -0.000017, which helps us double check that the gain is negative.
+
+    \item From the previous analysis in question 2.3, we found that the TF from the manipulated input \(Q'(s)\) to the controlled output \(C_A'(s)\) has a negative gain. In the feedback control system, the controller output is based on the error signal \(E(s) = R'(s) - C_A'(s)\), and the controller applies a gain \(K_C\) to compute the input to the process:
+    
+    \[
+    Q'(s) = G_C(s) E(s) = K_C E(s)
+    \]
+    
+    If the sign of \(K_C\) does not match the sign of the process gain, the feedback becomes positive feedback rather than negative feedback since the input \(Q'(s)\) will be proportional to the error, and continuously move the output away from setpoint, which leads to instability. This was also mentioned in class that controller gain and process gain should be the same sign. Thus, \(K_C\) should be negative.
+
+    \medskip
+
+    We can also assess the block diagram. If \(C_A'(s)\) goes above setpoint, we get that \(E(s) = R'(s) - C_A'(s) < 0\). With the negative error, we want to increase heat (positive \(Q'(s)\)), since as mentioned in question 2.3, increasing temperature will use up more of \(A\), reducing \(C_A'(s)\). To get a positive \(Q'(s)\) in this test case, the \(K_C\) must be negative.
+
+    \item 
+        
   \end{enumerate}
 
 \end{enumerate}
