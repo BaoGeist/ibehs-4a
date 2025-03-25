@@ -181,22 +181,6 @@ Baoze Lin, Hady Ibrahim
     \]
 
     \[
-    3K_c > 0.92 + 2.76K_c
-    \]
-
-    \[
-    (3 - 2.76)K_c > 0.92
-    \]
-
-    \[
-    0.24K_c > 0.92
-    \]
-
-    \[
-    K_c > \frac{0.92}{0.24}
-    \]
-
-    \[
     K_c > 3.8333...
     \]
 
@@ -237,7 +221,7 @@ Baoze Lin, Hady Ibrahim
     K_p = 3, \quad \tau_p = \frac{1}{2}, \quad K_c = 3, \quad \tau_I = 0.05
     \]
 
-    Together, the closed-loop transfer fucntion for the system becomes:
+    Together, the closed-loop transfer function for the system becomes:
 
     \[
     \frac{Y'(s)}{R'(s)} = \frac{\tau_I s + 1}{\frac{\tau_I \tau_p}{K_c K_p} s^2 + \tau_I \frac{(1 + K_c K_p)}{K_c K_p} s + 1}
@@ -287,6 +271,30 @@ Baoze Lin, Hady Ibrahim
     \end{figure}
 
     From comparing the different integral time constants, we can see that \(\tau_I\) dictates in a PI controller the trade-off between response speed and stability. Small values (e.g., \(\tau_I = 0.01\)) yield fast responses but can cause excessive overshoot and oscillations. Larger values (e.g., \(\tau_I = 2\)) improve stability with less overshoot but result in slower responses. Tuning \(\tau_I\) aims to find an optimal value, like \(\tau_I = 0.4\), that balances speed and stability according to the specific process requirements. This is due to the mathematical relationship between \(\tau_I\) and the damping factor and time constant, which affect the system's response characteristics.
+
+    % Answer to 1.10
+    \item
+    The surface plots are shown below in Figure \ref{fig:figure1_9} and Figure \ref{fig:figure1_10}. The surface plots show the relationship between the integral time constant \( \tau_I \) and the damping factor \( \zeta \) with the settling time and the relative overshoot.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{Figures/figure1_10a.png}
+      \caption{Surface plot of settling time and integral time constant}
+      \label{fig:figure1_9}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{Figures/figure1_10b.png}
+      \caption{Surface plot of relative overshoot and integral time constant}
+      \label{fig:figure1_10}
+    \end{figure}
+
+    The surface plots for the closed-loop time constant (\(\tau\)) and damping factor (\(\zeta\)) reveal important insights into the system's dynamics and the trade-offs between speed and stability. The time constant plot shows that \(\tau\) decreases as the proportional gain (\(K_c\)) increases, indicating a faster system response. However, very high \(K_c\) values can lead to instability, as seen in the damping factor plot. Similarly, smaller integral time constants (\(\tau_I\)) reduce \(\tau\), but overly small \(\tau_I\) can destabilize the system. The goal is to minimize \(\tau\) for a fast response while ensuring the system remains stable.
+
+  The damping factor plot highlights that a value of \(\zeta\) close to 1 is ideal, as it represents critical damping, where the system responds quickly without oscillations. For small \(K_c\), the system is underdamped (\(\zeta < 1\)), leading to oscillations, while very large \(K_c\) results in overdamping (\(\zeta > 1\)), causing a sluggish response. Larger \(\tau_I\) values increase \(\zeta\), while smaller \(\tau_I\) reduce it, potentially leading to instability.
+
+  To optimize the system, we aim to balance speed and stability by selecting \(K_c\) and \(\tau_I\) values that minimize \(\tau\) while keeping \(\zeta\) close to 1. From the plots, moderate \(K_c\) values (e.g., 2–4) and small-to-moderate \(\tau_I\) values (e.g., 0.5–1) are likely to achieve this balance, providing a fast and stable response.
 
 
   \end{enumerate}
