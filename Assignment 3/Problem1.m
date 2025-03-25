@@ -183,3 +183,39 @@ plot(Kc_values, tauI_critical, 'r-', 'LineWidth', 2, 'DisplayName', '\zeta = 1')
 hold off;
 
 saveas(gcf, 'Figures/figure1_12.png');
+
+%% Question 1.13
+% Set optimal tuning parameters
+Kc_optimal = 5;
+tauI_optimal = 0.117187;
+simTime = 2;
+
+% Load the Simulink model
+cd("Simulinks\")
+modelName = 'model1_13'; 
+load_system(modelName);
+cd("..");
+
+% Set the optimal tuning parameters in the controller block
+set_param([modelName '/PI Controller'], 'P', num2str(Kc_optimal));
+set_param([modelName '/PI Controller'], 'I', num2str(1/tauI_optimal));
+
+% Run simulation
+simOut = sim(modelName, 'StopTime', num2str(simTime));
+
+% Extract response data
+response_data = simOut.response;
+time = response_data.time;  
+y_t = response_data.signals.values;
+
+% Plot the response
+figure;
+plot(time, y_t, 'b-', 'LineWidth', 2);
+xlabel('Time (s)');
+ylabel('y(t)');
+ylim([0 1.5]);
+title('Closed-Loop Response with Optimal Tuning Parameters');
+grid on;
+
+saveas(gcf, 'Figures/figure1_13.png');
+close_system(modelName, 0);
