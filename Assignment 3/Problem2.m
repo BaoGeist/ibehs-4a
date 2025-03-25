@@ -50,22 +50,22 @@ G5 = (G1 * G4) / (1 - (G1 * G3));
 fprintf("Gain of Ca'(s)/Q'(s): %.6f\n", dcgain(G5));
 
 %% 2.5 
-Kc = -20000;       % Proportional gain
-Tau_i = 50;      % Integral constant
-Ki = 1/Tau_i;   % for the simulink model
+Kc = -1;        % Proportional gain
+Tau_i = 1;       % Integral constant
+Ki = 1/Tau_i;      % for the simulink model
 
 load_system('Simulinks/model2_5');
 
 % Set PI Parameters
 set_param('model2_5/PID_Controller', 'P', num2str(Kc));
 set_param('model2_5/PID_Controller', 'I', num2str(Ki));
-set_param('model2_5', 'StopTime', '2400'); % 40 mins = 2400 seconds
+set_param('model2_5', 'StopTime', '40'); % 40 since all units are in minutes
 
 % Update and Simulate Model
 set_param('model2_5', 'SimulationCommand', 'update')
 out = sim('model2_5');
 
-t_min = out.tout / 60; % convert from secs to mins
+t_min = out.tout;
 Q = out.Q.signals.values;
 E = out.E.signals.values;
 Temp = out.Temp.signals.values;
@@ -84,10 +84,10 @@ figure;
 subplot(4,1,1);
 plot(t_min, Q, 'k', 'LineWidth', 1.5);
 hold on;
-yline(-4000, '--', 'Max Cooling Limit', ...
+yline(-2000, '--', 'Max Cooling Limit', ...
        'Color', 'r', ...
-       'LabelHorizontalAlignment', 'left', ...
-       'LabelVerticalAlignment', 'bottom', ...
+       'LabelHorizontalAlignment', 'right', ...
+       'LabelVerticalAlignment', 'top', ...
        'LineWidth', 1.2);
 hold off;
 xlabel('Time (minutes)');
@@ -102,7 +102,7 @@ plot(t_min, Temp, 'k', 'LineWidth', 1.5);
 hold on;
 yline(15, '--', 'Max Temperature Limit', ...
        'Color', 'r', ...
-       'LabelHorizontalAlignment', 'left', ...
+       'LabelHorizontalAlignment', 'right', ...
        'LabelVerticalAlignment', 'bottom', ...
        'LineWidth', 1.2);
 hold off;
@@ -119,17 +119,15 @@ hold on;
 % +0.01
 yline(0.01, '--', 'Max Ca Limit', ...
        'Color', 'r', ...
-       'LabelHorizontalAlignment', 'left', ...
+       'LabelHorizontalAlignment', 'right', ...
        'LabelVerticalAlignment', 'bottom', ...
        'LineWidth', 1.2);
 % -0.01
 yline(-0.01, '--', 'Min Ca Limit', ...
        'Color', 'r', ...
-       'LabelHorizontalAlignment', 'left', ...
-       'LabelVerticalAlignment', 'bottom', ...
+       'LabelHorizontalAlignment', 'right', ...
+       'LabelVerticalAlignment', 'top', ...
        'LineWidth', 1.2);
-ylim([-0.02 0.02])
-xlim([0 40])
 hold off;
 xlabel('Time (minutes)');
 ylabel("C_{A}'(t) (kmol/m^3)");
@@ -147,7 +145,7 @@ text(40, E_40min, sprintf('E''(40min) = %.4f', E_40min), 'VerticalAlignment', 'b
 grid on;
 
 % Title plots
-sg = sgtitle(sprintf('Output Signals of Simulation with K_c = %.2f, \\tau_I = %.2f', Kc, tau));
+sg = sgtitle(sprintf('Output Signals of Simulation with K_c = %.2f, \\tau_I = %.2f', Kc, Tau_i));
 sg.FontName = 'Helvetica';
 sg.FontSize = 14;
 sg.FontWeight = 'bold';

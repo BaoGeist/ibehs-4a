@@ -1,9 +1,8 @@
 \documentclass[12pt]{article}
-\setlength{\oddsidemargin}{0in}
-\setlength{\evensidemargin}{0in}
-\setlength{\textwidth}{6.5in}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{\baselineskip}
+
+\usepackage[top=0.75in, bottom=0.75in, left=1in, right=1in]{geometry}
 
 \usepackage{amsmath,amsfonts,amssymb,graphicx, hyperref, float}
 
@@ -418,6 +417,7 @@ Baoze Lin, Hady Ibrahim
     \end{figure}
 
     % 2.3
+    \clearpage
     \item From the derived closed-loop block diagram in Figure \ref{fig:figure2_2}, the open-loop transfer function from the heat input \(Q'(s)\) to the outlet concentration \(C_A'(s)\) is:
 
     \[
@@ -467,7 +467,75 @@ Baoze Lin, Hady Ibrahim
 
     We can also assess the block diagram. If \(C_A'(s)\) goes above setpoint, we get that \(E(s) = R'(s) - C_A'(s) < 0\). With the negative error, we want to increase heat (positive \(Q'(s)\)), since as mentioned in question 2.3, increasing temperature will use up more of \(A\), reducing \(C_A'(s)\). To get a positive \(Q'(s)\) in this test case, the \(K_C\) must be negative.
 
-    \item 
+    \item To design the PI controller to reject disturbances and keep the outlet concentration as close to zero as possible, we simulated the closed-loop system for several values of $K_c$ and $\tau_I$, using the transfer functions derived analytically. These transfer functions, derived from the linearized system equations, are shown in Figures \ref{fig:figure2_5a} and \ref{fig:figure2_5b}.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.85\textwidth]{Figures/figure2_5a.png}
+      \caption{Transfer function derivations for $C_A'/Q'$ and $C_A'/C_{A0}'$}
+      \label{fig:figure2_5a}
+    \end{figure}
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.85\textwidth]{Figures/figure2_5b.png}
+      \caption{Transfer function derivations for $T'/C_{A0}'$ and $T'/Q'$}
+      \label{fig:figure2_5b}
+    \end{figure}
+    
+    The design goal is to ensure the system meets the following specifications:
+    \begin{itemize}
+      \item $Q'(t) \geq -2000$ kJ/min
+      \item $T'(t) \leq 15$ K (Note K vs C doesn't matter since it's deviation which are equal)
+      \item $|C_A'(t)| \leq 0.01$ kmol/m$^3$
+      \item All outputs return close to zero within 40 minutes
+    \end{itemize}
+    
+    We evaluated four controller configurations:
+    
+    \clearpage
+    \textbf{Test Case 1: $K_c = -1.00$, $\tau_I = 1.00$} \\
+    This test case acts as the baseline, shown in Figure \ref{fig:figure2_5_testcase1}. As expected, the system is too sluggish. The concentration $C_A'(t)$ drifts below $-0.01$ kmol/m$^3$ and does not return to the setpoint by 40 minutes. Additionally, the temperature $T'(t)$ exceeds the safety threshold of 15 K. The control effort $Q'(t)$ remains within bounds, but the error $E'(t)$ continues to increase and plateaus, indicating poor control. To improve performance, we decided to try increasing the aggressiveness of the controller by scaling $K_c$ up by a factor of 100.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.900\textwidth]{Figures/figure2_5_testcase1.png}
+      \caption{System response with $K_c = -1.00$, $\tau_I = 1.00$}
+      \label{fig:figure2_5_testcase1}
+    \end{figure}
+    
+    \clearpage
+    \textbf{Test Case 2: $K_c = -100.00$, $\tau_I = 1.00$} \\
+    Shown in Figure \ref{fig:figure2_5_testcase2}, this test case improves the response slightly. We observe that $C_A'(t)$ begins to return toward the setpoint, though it still does not settle within bounds by 40 minutes. Temperature $T'(t)$ is closer to the limit but still slightly exceeds 15 K. This suggests the controller needs to act faster. Since reducing $\tau_I$ increases responsiveness, the next step we decided to try was to decrease $\tau_I$.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.900\textwidth]{Figures/figure2_5_testcase2.png}
+      \caption{System response with $K_c = -100.00$, $\tau_I = 1.00$}
+      \label{fig:figure2_5_testcase2}
+    \end{figure}
+    
+    \clearpage
+    \textbf{Test Case 3: $K_c = -100.00$, $\tau_I = 0.10$} \\
+    With a reduced $\tau_I$, the system becomes more responsive. As shown in Figure \ref{fig:figure2_5_testcase3}, both $C_A'(t)$ and $T'(t)$ begin returning toward zero, but still overshoot the design limits early in the simulation. This indicates the controller is not yet aggressive enough to fully compensate for the disturbance. Therefore, we further increase $K_c$ by another factor of 10.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.900\textwidth]{Figures/figure2_5_testcase3.png}
+      \caption{System response with $K_c = -100.00$, $\tau_I = 0.10$}
+      \label{fig:figure2_5_testcase3}
+    \end{figure}
+    
+    \clearpage
+    \textbf{Test Case 4: $K_c = -1000.00$, $\tau_I = 0.10$} \\
+    Figure \ref{fig:figure2_5_testcase4} shows that with this configuration, all design objectives are successfully met. The concentration deviation $C_A'(t)$ stays within the $\pm0.01$ bounds, the temperature remains under 15 K after the initial peak, and $Q'(t)$ does not exceed the minimum limit of -2000 kJ/min. Not only that but $C_A'(t)$ returns to 0 at the end of the 40 mins. Additionally, the error $E'(t)$ converges back to zero. This configuration is selected as the final design.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.900\textwidth]{Figures/figure2_5_testcase4.png}
+      \caption{System response with $K_c = -1000.00$, $\tau_I = 0.10$}
+      \label{fig:figure2_5_testcase4}
+    \end{figure}    
         
   \end{enumerate}
 
