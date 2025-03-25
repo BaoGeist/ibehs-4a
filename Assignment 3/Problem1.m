@@ -158,3 +158,28 @@ title('Curve of Kc and \tau_I for Critical Damping (\zeta = 1)');
 grid on;
 legend('Critical Damping Curve (\zeta = 1)');
 saveas(gcf, 'Figures/figure1_11.png');
+
+%% Question 1.12
+Kp = 3;
+tau_p = 1/2;
+
+Kc_range = linspace(0.05, 5, 50);
+tauI_range = linspace(0.01, 2, 50);
+[Kc_grid, tauI_grid] = meshgrid(Kc_range, tauI_range);
+
+tau_grid = sqrt((tauI_grid * tau_p) ./ (Kc_grid * Kp));
+
+figure;
+hold on;
+
+contourf(Kc_grid, tauI_grid, tau_grid, 20, 'LineStyle', 'none');
+colorbar; 
+xlabel('K_c');
+ylabel('\tau_I');
+title('Optimal Tuning: Critical Damping Curve & Closed-Loop Time Constant Contours');
+legend('\zeta = 1 (Critical Damping)');
+grid on;
+plot(Kc_values, tauI_critical, 'r-', 'LineWidth', 2, 'DisplayName', '\zeta = 1');
+hold off;
+
+saveas(gcf, 'Figures/figure1_12.png');
