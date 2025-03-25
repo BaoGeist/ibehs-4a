@@ -185,30 +185,26 @@ hold off;
 saveas(gcf, 'Figures/figure1_12.png');
 
 %% Question 1.13
-% Set optimal tuning parameters
 Kc_optimal = 5;
 tauI_optimal = 0.117187;
 simTime = 2;
 
-% Load the Simulink model
 cd("Simulinks\")
 modelName = 'model1_13'; 
 load_system(modelName);
 cd("..");
 
-% Set the optimal tuning parameters in the controller block
+% run simulation
 set_param([modelName '/PI Controller'], 'P', num2str(Kc_optimal));
 set_param([modelName '/PI Controller'], 'I', num2str(1/tauI_optimal));
 
-% Run simulation
 simOut = sim(modelName, 'StopTime', num2str(simTime));
 
-% Extract response data
+% plot
 response_data = simOut.response;
 time = response_data.time;  
 y_t = response_data.signals.values;
 
-% Plot the response
 figure;
 plot(time, y_t, 'b-', 'LineWidth', 2);
 xlabel('Time (s)');
@@ -218,4 +214,50 @@ title('Closed-Loop Response with Optimal Tuning Parameters');
 grid on;
 
 saveas(gcf, 'Figures/figure1_13.png');
+close_system(modelName, 0);
+
+%% Question 1.14
+% define original and tuning parameters
+Kc_values = [5, 3, 3, 1, 1];  
+tauI_values = [0.1171870, 0.1171870, 0.4, 0.4, 0.5];  
+simTime = 2;  % Simulation time
+
+% load model as system
+cd("Simulinks\")
+modelName = 'model1_14'; 
+load_system(modelName);
+cd("..");
+
+figure;
+hold on;
+colors = lines(length(Kc_values));
+line_styles = {'-', '--', ':', '-.', '-', '--', ':', '-.',};  
+
+% loop through each iteration
+for i = 1:length(Kc_values)
+    % set tuning parameters
+    set_param([modelName '/PI Controller'], 'P', num2str(Kc_values(i)));
+    set_param([modelName '/PI Controller'], 'I', num2str(1/tauI_values(i)));  % I = 1/tauI
+    
+    % run simulation
+    simOut = sim(modelName, 'StopTime', num2str(simTime));
+    
+    response_data = simOut.response;
+    time = response_data.time;
+    y_t = response_data.signals.values;
+    
+    % plot
+    plot(time, y_t, 'Color', colors(i, :), 'LineStyle', line_styles{i}, 'LineWidth', 1.5, ...
+        'DisplayName', ['Kc = ' num2str(Kc_values(i)) ', \tau_I = ' num2str(tauI_values(i))]);
+end
+
+% plot all
+xlabel('Time (s)');
+ylabel('y(t)');
+title('Closed-Loop Response with Sensor Dynamics for Different Tuning Iterations');
+legend show;
+grid on;
+hold off;
+
+saveas(gcf, 'Figures/figure1_15.png');
 close_system(modelName, 0);
