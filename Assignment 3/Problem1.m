@@ -133,3 +133,28 @@ surf(KC_mesh, tauI_mesh, critical_plane, 'FaceAlpha', 0.4, 'FaceColor', 'r', 'Ed
 legend({'\zeta Surface', 'Critical Damping Plane (\zeta = 1)'}, 'Location', 'best');
 hold off;
 saveas(gcf, 'Figures/figure1_10b.png');
+
+%% Problem 1.11
+Kp = 3;
+tau_p = 1/2;
+
+Kc_values = linspace(0.05, 5, 100);
+tauI_critical = zeros(size(Kc_values)); 
+
+zeta_equation = @(tauI, Kc) (1/2) * (1 + Kc * Kp) * sqrt(tauI / (Kc * Kp * tau_p)) - 1;
+
+for i = 1:length(Kc_values)
+    Kc = Kc_values(i);
+    tauI_initial_guess = 0.1;
+    tauI_critical(i) = fsolve(@(tauI) zeta_equation(tauI, Kc), tauI_initial_guess);
+end
+
+% plot
+figure;
+plot(Kc_values, tauI_critical, 'r-', 'LineWidth', 2);
+xlabel('Kc (Proportional Controller Gain)');
+ylabel('\tau_I (Integral Time Constant)');
+title('Curve of Kc and \tau_I for Critical Damping (\zeta = 1)');
+grid on;
+legend('Critical Damping Curve (\zeta = 1)');
+saveas(gcf, 'Figures/figure1_11.png');

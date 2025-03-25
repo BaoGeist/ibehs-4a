@@ -292,9 +292,20 @@ Baoze Lin, Hady Ibrahim
 
     The surface plots for the closed-loop time constant (\(\tau\)) and damping factor (\(\zeta\)) reveal important insights into the system's dynamics and the trade-offs between speed and stability. The time constant plot shows that \(\tau\) decreases as the proportional gain (\(K_c\)) increases, indicating a faster system response. However, very high \(K_c\) values can lead to instability, as seen in the damping factor plot. Similarly, smaller integral time constants (\(\tau_I\)) reduce \(\tau\), but overly small \(\tau_I\) can destabilize the system. The goal is to minimize \(\tau\) for a fast response while ensuring the system remains stable.
 
-  The damping factor plot highlights that a value of \(\zeta\) close to 1 is ideal, as it represents critical damping, where the system responds quickly without oscillations. For small \(K_c\), the system is underdamped (\(\zeta < 1\)), leading to oscillations, while very large \(K_c\) results in overdamping (\(\zeta > 1\)), causing a sluggish response. Larger \(\tau_I\) values increase \(\zeta\), while smaller \(\tau_I\) reduce it, potentially leading to instability.
+    The damping factor plot highlights that a value of \(\zeta\) close to 1 is ideal, as it represents critical damping, where the system responds quickly without oscillations. For small \(K_c\), the system is underdamped (\(\zeta < 1\)), leading to oscillations, while very large \(K_c\) results in overdamping (\(\zeta > 1\)), causing a sluggish response. Larger \(\tau_I\) values increase \(\zeta\), while smaller \(\tau_I\) reduce it, potentially leading to instability.
 
-  To optimize the system, we aim to balance speed and stability by selecting \(K_c\) and \(\tau_I\) values that minimize \(\tau\) while keeping \(\zeta\) close to 1. From the plots, moderate \(K_c\) values (e.g., 2–4) and small-to-moderate \(\tau_I\) values (e.g., 0.5–1) are likely to achieve this balance, providing a fast and stable response.
+    To optimize the system, we aim to balance speed and stability by selecting \(K_c\) and \(\tau_I\) values that minimize \(\tau\) while keeping \(\zeta\) close to 1. From the plots, moderate \(K_c\) values (e.g., 2–4) and small-to-moderate \(\tau_I\) values (e.g., 0.5–1) are likely to achieve this balance, providing a fast and stable response.
+
+    % Answer to 1.11
+    \item
+    The curve that represents the intersection between the surface $\zeta = f(K_c, \tau_I)$ and plane $\zeta = 1$. The curve is shown in Figure \ref{fig:figure1_11}.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure1_11.png}
+      \caption{Intersection curve between the surface and plane}
+      \label{fig:figure1_11}
+    \end{figure}
 
 
   \end{enumerate}
