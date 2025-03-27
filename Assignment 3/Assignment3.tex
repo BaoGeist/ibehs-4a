@@ -71,8 +71,6 @@ Baoze Lin, Hady Ibrahim
       \label{fig:figure1_3}
     \end{figure}
     
-    \pagebreak
-    
     % Answer to 1.3
     \item 
     The Simulink model is shown below in Figure \ref{fig:figure1_4}. The response of the system is shown in Figure \ref{fig:figure1_5}.
@@ -86,7 +84,7 @@ Baoze Lin, Hady Ibrahim
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.8\textwidth]{Figures/figure1_3.png}
+      \includegraphics[width=0.7\textwidth]{Figures/figure1_3.png}
       \caption{Closed-loop step response}
       \label{fig:figure1_5}
     \end{figure}
@@ -128,13 +126,19 @@ Baoze Lin, Hady Ibrahim
     \lim_{t \to \infty} y(t) = \lim_{s \to 0} s \cdot \frac{24}{(s+26)s} = \lim_{s \to 0} \frac{24}{s+26} = \frac{24}{26} = \frac{12}{13} \approx 0.923
     \]
 
-    The steady-state value of the output is approximately \( 0.923 \). Since the system is operating on displacement from a rock assembly with a step input, the set point is 1. Thus, the offset of this system is approximately \( 0.923 \). Referring to the step response in Figure \ref{fig:figure1_5}, we can see the offset is approximately \( 1 - 0.923 = 0.077\).
+    Putting this into the offset equation, we get the following offset:
+
+    \[
+    \text{Offset} = \lim_{t \to \infty} r(t) - \lim_{t \to \infty} y(t) = 1 - 0.923 = 0.077
+    \]
+
+    The steady-state value of the output is approximately \( 0.923 \). Since the system is operating on displacement from a rack assembly with a step input, the set point is 1. Thus, the offset of this system is approximately \( 0.077 \). This can be confirmed by referring to the step response in Figure \ref{fig:figure1_5}, where we can see the offset is approximately 0.077.
 
     \pagebreak
 
     % Answer to 1.5
     \item
-    The closed-loop system for controller gains $K_c = {0.25, 1, 2, 4, 10}$ are shown in Figure \ref{fig:figure1_6}. Observing the results, we can see that the offset of the system decreases as the proportional gain increases.
+    The closed-loop system for controller gains $K_c = {0.25, 1, 2, 4, 10}$ are shown in Figure \ref{fig:figure1_6}. Observing the results, we can see that the offset of the system decreases as the proportional gain increases. This is because the higher the proportional gain, the more the controller can correct for the error, leading to a smaller offset -- it essentially gets more aggressive and faster than higher $K_c$.
 
     \begin{figure}[H]
       \centering
@@ -252,11 +256,13 @@ Baoze Lin, Hady Ibrahim
     K = \tau_I s + 1 = 0.05s + 1
     \]
 
-    The calculated time constant is approximately \( \tau \approx 0.0527 \), which suggests the system should settle relatively quickly. The expected settling time, approximately \( 4\tau = 0.21s \), can be seen in Figure \ref{fig:figure1_7}, where it settles around that point. \linebreak
+    At steady state, s becomes 0 due to the FVT. Thus, \( K(0) = 1 \), which confirms that the system should track a step input without steady-state error. This is expected of a system with a PI-Controller -- there should be no offset.\linebreak
+
+    The calculated time constant is approximately \( \tau \approx 0.0527 \), which suggests the system should settle relatively quickly. The expected settling time, approximately \( 5\tau = 0.2635s \), can be seen in Figure \ref{fig:figure1_7}, where it settles around that point. \linebreak
 
     The damping factor was found to be \( \zeta \approx 0.526 \), suggesting a slightly underdamped response. This means the system should exhibit small oscillations but should not overshoot excessively, as observed in the above figure. \linebreak
 
-    The closed-loop gain is given by \( K = 0.05s + 1 \), which means the gain varies with frequency rather than being a simple constant. Evaluating it at steady-state (\( s = 0 \)), we get \( K(0) = 1 \), which confirms that the system should track a step input without steady-state error. Over time, our system approaches 1 as expected.
+    \pagebreak
 
     % Answer to 1.9
     \item
@@ -270,6 +276,8 @@ Baoze Lin, Hady Ibrahim
     \end{figure}
 
     From comparing the different integral time constants, we can see that \(\tau_I\) dictates in a PI controller the trade-off between response speed and stability. Small values (e.g., \(\tau_I = 0.01\)) yield fast responses but can cause excessive overshoot and oscillations. Larger values (e.g., \(\tau_I = 2\)) improve stability with less overshoot but result in slower responses. Tuning \(\tau_I\) aims to find an optimal value, like \(\tau_I = 0.4\), that balances speed and stability according to the specific process requirements. This is due to the mathematical relationship between \(\tau_I\) and the damping factor and time constant, which affect the system's response characteristics.
+
+    \pagebreak
 
     % Answer to 1.10
     \item
@@ -289,11 +297,11 @@ Baoze Lin, Hady Ibrahim
       \label{fig:figure1_10}
     \end{figure}
 
-    The surface plots for the closed-loop time constant (\(\tau\)) and damping factor (\(\zeta\)) reveal important insights into the system's dynamics and the trade-offs between speed and stability. The time constant plot shows that \(\tau\) decreases as the proportional gain (\(K_c\)) increases, indicating a faster system response. However, very high \(K_c\) values can lead to instability, as seen in the damping factor plot. Similarly, smaller integral time constants (\(\tau_I\)) reduce \(\tau\), but overly small \(\tau_I\) can destabilize the system. The goal is to minimize \(\tau\) for a fast response while ensuring the system remains stable.
+    The surface plots for the closed-loop time constant (\(\tau\)) and damping factor (\(\zeta\)) reveal important insights into the system's dynamics and the trade-offs between speed and stability. The time constant plot shows that \(\tau\) decreases as the proportional gain (\(K_c\)) increases, indicating a faster system response. However, very high \(K_c\) values can lead to instability, as seen in the damping factor plot, where higher $K_c$'s tend to increase the damping factor past a magnitude of 1. Similarly, smaller integral time constants (\(\tau_I\)) reduce \(\tau\), but overly small \(\tau_I\) can destabilize the system. The goal is to minimize \(\tau\) for a fast response while ensuring the system remains stable.
 
     The damping factor plot highlights that a value of \(\zeta\) close to 1 is ideal, as it represents critical damping, where the system responds quickly without oscillations. For small \(K_c\), the system is underdamped (\(\zeta < 1\)), leading to oscillations, while very large \(K_c\) results in overdamping (\(\zeta > 1\)), causing a sluggish response. Larger \(\tau_I\) values increase \(\zeta\), while smaller \(\tau_I\) reduce it, potentially leading to instability.
 
-    To optimize the system, we aim to balance speed and stability by selecting \(K_c\) and \(\tau_I\) values that minimize \(\tau\) while keeping \(\zeta\) close to 1. From the plots, moderate \(K_c\) values (e.g., 2–4) and small-to-moderate \(\tau_I\) values (e.g., 0.5–1) are likely to achieve this balance, providing a fast and stable response.
+    To optimize the system, we aim to balance speed and stability by selecting \(K_c\) and \(\tau_I\) values that minimize \(\tau\) while keeping \(\zeta\) close to 1. From the plots, moderate \(K_c\) values (e.g., 2–4) and small-to-moderate \(\tau_I\) values (e.g., 0.2–0.5) are likely to achieve this balance, providing a fast and stable response.
 
     % Answer to 1.11
     \item
@@ -301,7 +309,7 @@ Baoze Lin, Hady Ibrahim
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.7\textwidth]{Figures/figure1_11.png}
+      \includegraphics[width=0.6\textwidth]{Figures/figure1_11.png}
       \caption{Intersection curve between the surface and plane}
       \label{fig:figure1_11}
     \end{figure}
@@ -321,7 +329,17 @@ Baoze Lin, Hady Ibrahim
 
     % Answer to 1.13
     \item
-    Graphing the above optimal tuning parameters, we get the following results for y\(t\). It exhibits the system characteristics that we were optimizing for in thh previous questions -- we have the quickest response that could occur while critically damped, as shown in Figure \ref{fig:figure1_13}.
+    Graphing the above optimal tuning parameters, we get the following results for y\(t\). It exhibits the system characteristics that we were optimizing for in thh previous questions -- we have the quickest response that could occur while critically damped, as shown in Figure \ref{fig:figure1_13}. Putting the system into ideal form, we get the below:
+
+    \[
+    G_c(s) = 5 \left( 1 + \frac{1}{0.117187 s} \right)
+    \]
+
+    Turning this into parallel form gives us the following:
+
+    \[
+    G_c(s) = 5 + \frac{5}{0.117187} \frac{1}{s}
+    \]
 
     \begin{figure}[H]
       \centering

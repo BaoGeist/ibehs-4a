@@ -156,7 +156,7 @@ xlabel('Kc (Proportional Controller Gain)');
 ylabel('\tau_I (Integral Time Constant)');
 title('Curve of Kc and \tau_I for Critical Damping (\zeta = 1)');
 grid on;
-legend('Critical Damping Curve (\zeta = 1)');
+legend('Critical Damping Curve Intersection with \zeta = 1');
 saveas(gcf, 'Figures/figure1_11.png');
 
 %% Question 1.12
@@ -174,10 +174,12 @@ hold on;
 
 contourf(Kc_grid, tauI_grid, tau_grid, 20, 'LineStyle', 'none');
 colorbar; 
+shading interp;
 xlabel('K_c');
 ylabel('\tau_I');
-title('Optimal Tuning: Critical Damping Curve & Closed-Loop Time Constant Contours');
-legend('\zeta = 1 (Critical Damping)');
+ylim([0 0.7])
+title('Optimal Tuning: Critical Damping Curve & Closed-Loop Time Constant Values');
+legend('Closed-Loop Time Constant');
 grid on;
 plot(Kc_values, tauI_critical, 'r-', 'LineWidth', 2, 'DisplayName', '\zeta = 1');
 hold off;
@@ -237,7 +239,7 @@ line_styles = {'-', '--', ':', '-.', '-', '--', ':', '-.',};
 for i = 1:length(Kc_values)
     % set tuning parameters
     set_param([modelName '/PI Controller'], 'P', num2str(Kc_values(i)));
-    set_param([modelName '/PI Controller'], 'I', num2str(1/tauI_values(i)));  % I = 1/tauI
+    set_param([modelName '/PI Controller'], 'I', num2str(Kc_values(i)/tauI_values(i)));  % I = 1/tauI
     
     % run simulation
     simOut = sim(modelName, 'StopTime', num2str(simTime));
