@@ -232,8 +232,40 @@ Baoze Lin, Hady Ibrahim
       K_D = 0.26001 \cdot 6 = 1.56006
     $$
 
+    % 2.2
+    \item
+    The Bode plot is shown below in Figure \ref{fig:figure2_2}.
 
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=\textwidth]{Figures/figure2-2.png}
+      \caption{Bode plot of the closed-loop system with transport delay.}
+      \label{fig:figure2_2}
+    \end{figure}
 
+    From the Bode plot and the associated Matlab code, we derive the Critical Frequency and the amplitude at said frequency as 0.3942 rad/s and 0.4673. With these numbers, we calculate the ultimate gain and the ultimate period.
+
+    \[
+    K_u = \frac{1}{\text{Critical Amplitude}} = \frac{1}{0.3942} \approx 2.537
+    \]
+
+    \[
+    T_u = \frac{2\pi}{\omega_c} = \frac{2\pi}{0.4673} \approx 13.445
+    \]
+
+    We then calculate the PID parameters $K_c$, $\tau_I$ and $K_D$ using the Ziegler-Nichols tuning rules.
+
+    \[
+    K_c = \frac{K_u}{1.7} = \frac{2.537}{1.7}\approx 1.492
+    \]
+
+    \[
+    \tau_I = \frac{T_u}{2} = \frac{13.445}{2} \approx 6.7225
+    \]
+
+    \[
+    K_D = \frac{T_u}{8} = \frac{13.445}{8} \approx 1.6806
+    \]
 
 
 
