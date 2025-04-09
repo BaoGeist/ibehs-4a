@@ -4,11 +4,11 @@
 
 \usepackage[top=0.75in, bottom=0.75in, left=1in, right=1in]{geometry}
 
-\usepackage{amsmath,amsfonts,amssymb,graphicx, hyperref, float}
+\usepackage{amsmath,amsfonts,amssymb,graphicx, hyperref, float, multirow}
 
 \begin{document}
 
-IBEHS 4A03 \hfill Assignment \#3\\
+IBEHS 4A03 \hfill Assignment \#4\\
 Baoze Lin, Hady Ibrahim
 
 \hrulefill
@@ -139,8 +139,109 @@ Baoze Lin, Hady Ibrahim
 \item Question 2
   \begin{enumerate}
     % 2.1
-    \item Write answer here
-     
+    \item 
+    The approximated first-order system equation for the closed-loop system is given by:
+    
+    \begin{equation}
+      \frac{Y(s)}{U(s)} = \frac{-1.2e^{-5s}}{6s + 1} = \frac{Ke^{-\theta s}}{\tau s + 1}
+    \end{equation}
+
+    We first start with the \textbf{Cohen-Coon} heuristic. From class, we are given the following equations:
+
+    $$
+      K_C = \frac{1}{K} \cdot \frac{\tau}{\theta} \left( \frac{4}{3} + \frac{\theta}{4\tau} \right) \quad \quad \quad \quad \quad
+      \tau_I = \theta \cdot \frac{32 + \frac{6\theta}{\tau}}{13 + \frac{8\theta}{\tau}} \quad \quad \quad \quad \quad
+      K_D = \theta \cdot \frac{4}{11 + \frac{2\theta}{\tau}} \\
+    $$
+
+    We thus get the answers below:
+
+    \[
+    K_c = \frac{1}{\left(-1.2\right)} \left( \frac{6}{5} \right) \left( \frac{4}{3} + {\frac{5}{4 \cdot 6}} \right) = -1.54166
+    \]
+
+    \[
+      \tau_I = \left(5\right) \cdot \frac{32 + \frac{6\left(5\right)}{\left(6\right)}}{13 + \frac{8\left(5\right)}{\left(6\right)}} = 9.40677
+    \]
+
+    \[
+      K_D = \left(5\right) \cdot \frac{4}{11 + \frac{2\left(5\right)}{\left(6\right)}} = 1.5789
+    \]
+
+    We then move onto the \textbf{Ciancone} heuristic. Since this system is for setpoint tracking, we use the correlation graphs as shown in class. To avoid wasting digital ink, the graphs were not attached.
+
+    For all graphs, we need to derive the fraction dead time first:
+
+    \[
+      \frac{\theta}{\theta + \tau} = \frac{5}{5 + 6} = 0.454545
+    \]
+
+    For the graphs \( K_c K_p \), \( \frac{\tau_I}{\theta + \tau} \), and \( \frac{K_D}{\theta + \tau} \), we get the values 0.73, 0.73, and 0.08 respectively. Solving for \( K_c \), \( \tau_I \), and \( K_D \) gives us:
+
+    $$
+      K_C = \frac{0.73}{-1.2} = -6.083 \quad \quad \quad \quad \quad
+      \tau_I = \left(5 + 6\right) \cdot 0.73 = 8.03 \quad \quad \quad \quad \quad
+      K_D = \left(5 + 6\right) \cdot 0.08 = 0.88 \\
+    $$
+
+    \pagebreak
+
+    Lastly, we calculate the \textbf{ITAE} heuristic. We start with the equation:
+
+    \[
+      Y = A\left(\frac{\theta}{\tau}\right)^B
+    \]
+
+    The values of \( A \) and \( B \) are given in the table below:
+
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{|c|c|c|c|}
+      \hline
+      \textbf{Controller} & \textbf{Mode} & \textbf{A} & \textbf{B} \\
+      \hline
+      \multirow{3}{*}{PID} & P & 0.965 & -0.85 \\
+                           & I & 0.796 & -0.1465 \\
+                           & D & 0.308 &  0.929 \\
+      \hline
+      \end{tabular}
+      \caption{Controller Parameters A and B for PID Mode}
+    \end{table}
+
+    We also note the following equations to calculate the parameters in set-point tracking:
+
+    \[
+    Y_P = KK_C \quad \quad \quad \quad \quad
+    Y_I = \frac{\tau}{\tau_I} = A + B \left( \frac{\theta}{\tau} \right) \quad \quad \quad \quad \quad
+    Y_D = \frac{K_D}{\tau}
+    \]
+
+    We do some mathematics:
+
+    $$
+      Y_P = \left(0.965\right)\left(\frac{\theta}{\tau}\right)^{-0.85} = 1.12675 \quad \quad \quad 
+      K_C = \frac{1.12675}{-1.2} = -0.938958
+    $$
+
+    $$
+      Y_I = \left(0.796\right) + \left(-0.1465\right) \cdot \left(\frac{\theta}{\tau}\right) = 0.67391 \quad \quad \quad 
+      \tau_I = \frac{6}{0.67391} = 8.895
+    $$
+    $$
+      Y_D = \left(0.308\right)\left(\frac{\theta}{\tau}\right)^{0.929} = 0.26001 \quad \quad \quad 
+      K_D = 0.26001 \cdot 6 = 1.56006
+    $$
+
+
+
+
+
+
+      
+
+
+    
+
   \end{enumerate}
 
 \end{enumerate}
