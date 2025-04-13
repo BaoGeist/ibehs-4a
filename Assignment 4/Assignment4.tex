@@ -179,8 +179,8 @@ Baoze Lin, Hady Ibrahim
     For the graphs \( K_c K_p \), \( \frac{\tau_I}{\theta + \tau} \), and \( \frac{K_D}{\theta + \tau} \), we get the values 0.73, 0.73, and 0.08 respectively. Solving for \( K_c \), \( \tau_I \), and \( K_D \) gives us:
 
     $$
-      K_C = \frac{0.73}{-1.2} = -0.683 \quad \quad \quad \quad \quad
-      \tau_I = \left(5 + 6\right) \cdot 0.73 = 8.03 \quad \quad \quad \quad \quad
+      K_C = \frac{0.73}{-1.2} = -0.683 \quad \quad 
+      \tau_I = \left(5 + 6\right) \cdot 0.73 = 8.03 \quad \quad
       K_D = \left(5 + 6\right) \cdot 0.08 = 0.88 \\
     $$
 
@@ -232,13 +232,15 @@ Baoze Lin, Hady Ibrahim
       K_D = 0.26001 \cdot 6 = 1.56006
     $$
 
+    \pagebreak
+
     % 2.2
     \item
     The Bode plot is shown below in Figure \ref{fig:figure2_2}.
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=\textwidth]{Figures/figure2-2.png}
+      \includegraphics[width=0.8\textwidth]{Figures/figure2-2.png}
       \caption{Bode plot of the closed-loop system with transport delay.}
       \label{fig:figure2_2}
     \end{figure}
@@ -316,29 +318,38 @@ Baoze Lin, Hady Ibrahim
 
     % 2.4
     \item
-    The Integral Squared Error (ISE) is a quantitative metric used to evaluate the performance of a control system. It is defined as:
-    \[
-    \text{ISE} = \int_0^\infty e^2(t) \, dt
-    \]
-    where \( e(t) \) is the error signal, calculated as the difference between the desired input and the system output. The ISE penalizes large errors more heavily due to the squared term, making it useful for minimizing overshoot and oscillations in the system response.
+    To optimize the PID controller parameters, the derivative gain (\( K_d \)) was fixed at the ITAE value of \( K_d = 1.56006 \), while the proportional gain (\( K_c \)) and integral time (\( \tau_I \)) were varied. Given our values from questions 2.1 and 2.2, we have a range of potential optimal proportional for the system. The values are shown below.
+    
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{|c|c|c|c|c|}
+          \hline
+          \textbf{Controller} & \textbf{\( K_c \)} & \textbf{\( \tau_I \) } & \textbf{\( K_d \) } \\
+          \hline
+          Cohen-Coon & -1.54166 & 9.40677 & 1.5789 \\
+          \hline
+          Ciancone & -0.683 & 8.03 & 0.88 \\
+          \hline
+          ITAE & -0.938958 & 8.895 & 1.56006 \\
+          \hline
+          Bode & -1.492 & 6.7225 & 1.6806 \\
+          \hline
+      \end{tabular}
+      \caption{Summary of PID Controller Parameters and Performance.}
+      \label{tab:table2-4a}
+    \end{table}
 
-    The Integral of Time-weighted Absolute Error (ITAE) is another performance metric, defined as:
-    \[
-    \text{ITAE} = \int_0^\infty t |e(t)| \, dt
-    \]
-    Unlike ISE, ITAE penalizes errors that persist over time, encouraging faster convergence and smoother responses. ITAE is particularly useful for optimizing controllers in systems where stability and rapid settling are critical.
-
-    To optimize the PID controller parameters, the derivative gain (\( K_d \)) was fixed at the ITAE value of \( K_d = 1.56006 \), while the proportional gain (\( K_c \)) and integral time (\( \tau_I \)) were varied. The system was simulated for a step change of \(-5\%\) moisture, and the Integral Squared Error (ISE) was calculated for each combination of \( K_c \) and \( \tau_I \).
+    To visualize the performance of all the different initially-tuned controllers over the range of their parameters, we select to graph the contour plot over the range of $\{-1.7, -0.5\}$ for $K_c$ and $\{5, 10\}$, which includes all the tuned parameters as well as a little arbitrary wiggle room on either side for both parameters. The system was simulated for a step change of \(-5\%\) moisture, and the Integral Squared Error (ISE) was calculated for each combination of \( K_c \) and \( \tau_I \).
 
     Figure \ref{fig:figure2_4a} shows the contour plot of ISE values versus \( K_c \) and \( \tau_I \). The plot reveals a clear region of optimal performance, where the ISE is minimized. The optimal parameters were identified as:
     \[
-    K_c = -1.2, \quad \tau_I = 7.5
+    K_c = -1.2, \quad \tau_I = 9
     \]
-    These values correspond to the lowest ISE, indicating the best controller performance in terms of minimizing overshoot, oscillations, and settling time.
+    These values correspond to the lowest ISE, indicating the best controller performance in terms of minimizing overshoot, oscillations, and settling time -- basically minimal large errors.
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.7\textwidth]{Figures/figure2-4a.png}
+      \includegraphics[width=0.9\textwidth]{Figures/figure2-4a.png}
       \caption{Contour Plot of ISE Values for Range of \( K_c \) and \( \tau_I \)}
       \label{fig:figure2_4a}
     \end{figure}
@@ -347,19 +358,37 @@ Baoze Lin, Hady Ibrahim
 
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.7\textwidth]{Figures/figure2-4b.png}
+      \includegraphics[width=0.9\textwidth]{Figures/figure2-4b.png}
       \caption{Contour Plot of ISE Values for Range of \( K_c \) and \( \tau_I \)}
       \label{fig:figure2_4b}
     \end{figure}
 
-    The results can be summarized as follows:
-    \begin{itemize}
-        \item \textbf{Cohen-Coon Controller:} The Cohen-Coon controller exhibits a sharp and aggressive response, with a steep initial decrease and a larger negative overshoot. This behavior is likely due to the high values of \( K_p \) and \( K_d \). Additionally, the Cohen-Coon controller takes the longest time to converge, stabilizing after approximately 70 hours.
-        \item \textbf{Ciancone Controller:} The Ciancone controller produces an overdamped response, with slower convergence compared to the ITAE and Bode controllers. However, it stabilizes faster than the Cohen-Coon controller, taking approximately 40 hours to converge.
-        \item \textbf{ITAE Controller:} The ITAE controller demonstrates smooth and stable performance, with minimal overshoot and faster convergence compared to the Cohen-Coon and Ciancone controllers. It is well-suited for systems requiring rapid settling and stability.
-        \item \textbf{Bode Controller:} The Bode controller exhibits a similar shape to the ITAE controller but has slightly more overshoot and oscillations. While it converges quickly, it is less stable than the ITAE controller.
-        \item \textbf{Optimal Controller:} The optimal controller, with \( K_c = -1.2 \) and \( \tau_I = 7.5 \), achieves the lowest ISE and provides the smoothest response. It balances speed, stability, and minimal overshoot, making it the best choice among the designs.
-    \end{itemize}
+    Referring to \ref{fig:figure2_4b}, we can see that the optimal controller with minimal ISE has minimal overshoot, minimal settling time and the perfect amount of aggressiveness. Adding the final
+    
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{|c|c|c|c|c|}
+          \hline
+          \textbf{Controller} & \textbf{\( K_c \)} & \textbf{\( \tau_I \) } & \textbf{\( K_d \) } \\
+          \hline
+          Cohen-Coon & -1.54166 & 9.40677 & 1.5789 \\
+          \hline
+          Ciancone & -0.683 & 8.03 & 0.88 \\
+          \hline
+          ITAE & -0.938958 & 8.895 & 1.56006 \\
+          \hline
+          Bode & -1.492 & 6.7225 & 1.6806 \\
+          \hline
+          \textbf{Optimal} & \textbf{-1.2} & \textbf{9} & \textbf{1.56006} \\
+          \hline
+      \end{tabular}
+      \caption{Summary of PID Controller with Optimal Controller Parameters and Performance.}
+      \label{tab:figure2-4b}
+    \end{table}
+
+    Note that the two closest controllers in $K_c$ and $\tau_I$ are the ITAE and Cohen-Coon controllers, showing that their implementation in this scenario is closest to the optimal parameters given that $K_D$ is selected as the $K_D$ from the ITAE controller. A reason why those controllers might have the closest paramters to the optimal controller could be due to the $K_D$ chosen being very similar to the Cohen-Coon $K_D$ and literally the same thing as the ITAE $K_D$.
+
+
 
     
 
