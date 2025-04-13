@@ -116,3 +116,240 @@ hold off;
 
 saveas(gcf, 'Figures/figure2_3e.png');
 
+%%
+clc; clearvars; close all;
+
+% -------------------------------------------------------------------- %
+% Fixed Parameters
+% -------------------------------------------------------------------- %
+Kd = 1.56006; % Fixed derivative gain from ITAE correlation
+step_input = -0.05; % Desired step change (-5% moisture)
+t = 0:0.1:50; % Simulation time vector
+
+% -------------------------------------------------------------------- %
+% Range of Kc and tau_I values to explore
+% -------------------------------------------------------------------- %
+Kc_values = -1.5:0.05:0; % Range of proportional gain values
+tau_I_values = 7:0.1:10; % Range of integral time values
+
+ISE = zeros(length(tau_I_values), length(Kc_values)); % Initialize ISE matrix
+
+% -------------------------------------------------------------------- %
+% Simulate the system for each combination of Kc and tau_I
+% -------------------------------------------------------------------- %
+cd("Simulinks\")
+model = 'Model2'; 
+load_system(model);
+cd("..");
+
+for i = 1:length(tau_I_values)
+    for j = 1:length(Kc_values)
+        % Get current values of Kc and tau_I
+        Kc = Kc_values(j);
+        tau_I = tau_I_values(i);
+
+        % Update PID Controller block parameters in Simulink
+        set_param([model '/PID Controller'], 'P', num2str(Kc)); % Set proportional gain
+        set_param([model '/PID Controller'], 'I', num2str(1/tau_I)); % Set integral gain (1/tau_I)
+        set_param([model '/PID Controller'], 'D', num2str(Kd)); % Set derivative gain
+
+        % Simulate the model
+        simOut = sim(model, 'StopTime', '50'); % Simulate for 50 seconds
+
+        % Extract simulation results
+        simout = simOut.get('simout'); % Get the timeseries object
+        time = simout.Time; % Extract the time vector
+        response = simout.Data; % Extract the output signal
+
+        % Calculate ISE for this combination of Kc and tau_I
+        error = step_input - response; % Error signal
+        ISE(i, j) = trapz(time, error.^2); % Integral Squared Error
+    end
+end
+
+close_system(model, 0); % Close the Simulink model without saving changes
+
+% -------------------------------------------------------------------- %
+% Find the optimal Kc and tau_I
+% -------------------------------------------------------------------- %
+[min_ISE, idx] = min(ISE(:)); % Find the minimum ISE and its index
+[optimal_tau_I_idx, optimal_Kc_idx] = ind2sub(size(ISE), idx); % Convert index to row/column
+optimal_tau_I = tau_I_values(optimal_tau_I_idx); % Optimal tau_I
+optimal_Kc = Kc_values(optimal_Kc_idx); % Optimal Kc
+
+fprintf('Optimal Kc: %.4f\n', optimal_Kc);
+fprintf('Optimal tau_I: %.4f\n', optimal_tau_I);
+fprintf('Minimum ISE: %.4f\n', min_ISE);
+
+% -------------------------------------------------------------------- %
+% Generate Contour Plot of ISE
+% -------------------------------------------------------------------- %
+figure;
+contour(Kc_values, tau_I_values, ISE, 'LineWidth', 1.5);
+colorbar;
+title('ISE Contour Plot');
+xlabel('K_c (Proportional Gain)');
+ylabel('\tau_I (Integral Time)');
+grid on;
+
+% -------------------------------------------------------------------- %
+% Simulate the system with optimal parameters and compare
+% -------------------------------------------------------------------- %
+% Update PID Controller block parameters with optimal values
+cd("Simulinks\")
+load_system(model);
+cd("..");
+
+set_param([model '/PID Controller'], 'P', num2str(optimal_Kc)); % Set optimal proportional gain
+set_param([model '/PID Controller'], 'I', num2str(1/optimal_tau_I)); % Set optimal integral gain
+set_param([model '/PID Controller'], 'D', num2str(Kd)); % Set fixed derivative gain
+
+% Simulate the model with optimal parameters
+simOut_optimal = sim(model, 'StopTime', '50'); % Simulate for 50 seconds
+simout_optimal = simOut_optimal.get('simout'); % Get the timeseries object
+time_optimal = simout_optimal.Time; % Extract the time vector
+response_optimal = simout_optimal.Data; % Extract the output signal
+
+% Compare with other controllers
+figure;
+hold on;
+plot(time_optimal, response_optimal, 'k', 'LineWidth', 2); % Optimal controller response
+legend_entries = {'Optimal Controller'};
+
+% Add responses for other controllers (Cohen-Coon, Ciancone, ITAE, Bode)
+pid_params = {
+    struct('Kp', -1.54166, 'Ti', 9.40677, 'Td', 1.5789, 'Name', 'Cohen-Coon'), ...
+    struct('Kp', -6.083, 'Ti', 8.03, 'Td', 0.88, 'Name', 'Ciancone'), ...
+    struct('Kp', -0.938958, 'Ti', 8.895, 'Td', 1.56006, 'Name', 'ITAE'), ...
+    struct('Kp', 1.492, 'Ti', 6.7225, 'Td', 1.6806, 'Name', 'Bode')
+};
+
+colors = {'r', 'b', 'g', 'm'}; % Colors for each design
+for i = 1:length(pid_params)
+    % Update PID Controller block parameters
+    Kp = pid_params{i}.Kp;
+    Ti = pid_params{i}.Ti;
+    Td = pid_params{i}.Td;
+    set_param([model '/PID Controller'], 'P', num2str(Kp)); % Set proportional gain
+    set_param([model '/PID Controller'], 'I', num2str(1/Ti)); % Set integral gain (1/Ti)
+    set_param([model '/PID Controller'], 'D', num2str(Td)); % Set derivative gain
+
+    % Simulate the model
+    simOut = sim(model, 'StopTime', '50'); % Simulate for 50 seconds
+    simout = simOut.get('simout'); % Get the timeseries object
+    time = simout.Time; % Extract the time vector
+    response = simout.Data; % Extract the output signal
+
+    % Plot the response
+    plot(time, response, colors{i}, 'LineWidth', 2);
+    legend_entries{end+1} = pid_params{i}.Name;
+end
+
+close_system(model, 0); % Close the Simulink model without saving changes
+
+grid on;
+title('Step Responses Comparison');
+xlabel('Time (s)');
+ylabel('Moisture Response');
+legend(legend_entries, 'Location', 'Best');
+hold off;
+
+%%
+%% Problem 2_4
+cd("Simulinks\")
+
+% Define ranges for K_C and tau_I
+K_C_values = -0.5:-0.1:-1.7;               % Range for proportional gain
+tau_I_values = 5:0.1:10;                   % Range for integral time
+
+IAEs = zeros(length(K_C_values), length(tau_I_values)); % Initialize ISE matrix
+
+% Loop through K_C and tau_I values
+for i = 1:length(K_C_values)
+    for j = 1:length(tau_I_values)
+        % Set current K_C and tau_I values
+        K_C = K_C_values(i);
+        tau_I = tau_I_values(j);
+
+        % Update PID parameters in Simulink
+        set_param('Model2/PID Controller', 'P', num2str(K_C)); % Set proportional gain
+        set_param('Model2/PID Controller', 'I', num2str(1/tau_I)); % Set integral gain (1/tau_I)
+
+        % Simulate the model
+        out = sim('Model2', 'StopTime', '75'); % Simulate for 75 seconds
+
+        % Extract output signal and time
+        Y = out.simout.Data; % Replace 'simout' with the actual variable name
+        time = out.simout.Time; % Extract the time vector
+
+        % Calculate ISE
+        error = (-5 - Y).^2; % Error signal
+        IAEs(i, j) = trapz(time, error); % Compute ISE using numerical integration
+    end
+end
+
+% Generate contour plot
+figure;
+contour(K_C_values, tau_I_values, IAEs', 100);
+xlabel('K_C');
+ylabel('\tau_I');
+title('Contour Plot for ISE values with K_C and \tau_I values');
+
+cd("..");
+
+%%
+% Simulate the system with optimal parameters
+optimal_K_C = -1.2; % Replace with the value from the contour plot
+optimal_tau_I = 7.5; % Replace with the value from the contour plot
+Kd = 1.56006; % Fixed derivative gain
+
+% Update PID Controller block parameters with optimal values
+set_param('Model2/PID Controller', 'P', num2str(optimal_K_C)); % Set optimal proportional gain
+set_param('Model2/PID Controller', 'I', num2str(1/optimal_tau_I)); % Set optimal integral gain
+set_param('Model2/PID Controller', 'D', num2str(Kd)); % Set fixed derivative gain
+
+% Simulate the model with optimal parameters
+out_optimal = sim('Model2', 'StopTime', '75'); % Simulate for 75 seconds
+Y_optimal = out_optimal.simout.Data; % Extract the output signal
+time_optimal = out_optimal.simout.Time; % Extract the time vector
+
+% Plot the optimal response
+figure;
+plot(time_optimal, Y_optimal, 'k', 'LineWidth', 2);
+hold on;
+
+% Compare with other controllers
+pid_params = {
+    struct('Kp', -1.54166, 'Ti', 9.40677, 'Td', 1.5789, 'Name', 'Cohen-Coon'), ...
+    struct('Kp', -0.683, 'Ti', 8.03, 'Td', 0.88, 'Name', 'Ciancone'), ...
+    struct('Kp', -0.938958, 'Ti', 8.895, 'Td', 1.56006, 'Name', 'ITAE'), ...
+    struct('Kp', -1.492, 'Ti', 6.7225, 'Td', 1.6806, 'Name', 'Bode')
+};
+
+colors = {'r', 'b', 'g', 'm'}; % Colors for each design
+legend_entries = {'Optimal Controller'};
+for i = 1:length(pid_params)
+    % Update PID Controller block parameters
+    Kp = pid_params{i}.Kp;
+    Ti = pid_params{i}.Ti;
+    Td = pid_params{i}.Td;
+    set_param('Model2/PID Controller', 'P', num2str(Kp)); % Set proportional gain
+    set_param('Model2/PID Controller', 'I', num2str(1/Ti)); % Set integral gain (1/Ti)
+    set_param('Model2/PID Controller', 'D', num2str(Td)); % Set derivative gain
+
+    % Simulate the model
+    out = sim('Model2', 'StopTime', '75'); % Simulate for 75 seconds
+    Y = out.simout.Data; % Extract the output signal
+    time = out.simout.Time; % Extract the time vector
+
+    % Plot the response
+    plot(time, Y, colors{i}, 'LineWidth', 2);
+    legend_entries{end+1} = pid_params{i}.Name;
+end
+
+grid on;
+title('Step Responses Comparison');
+xlabel('Time (hrs)');
+ylabel('Moisture Response');
+legend(legend_entries, 'Location', 'Best');
+hold off;

@@ -314,10 +314,52 @@ Baoze Lin, Hady Ibrahim
       \label{fig:figure2_3e}
     \end{figure}
 
-  
+    % 2.4
+    \item
+    The Integral Squared Error (ISE) is a quantitative metric used to evaluate the performance of a control system. It is defined as:
+    \[
+    \text{ISE} = \int_0^\infty e^2(t) \, dt
+    \]
+    where \( e(t) \) is the error signal, calculated as the difference between the desired input and the system output. The ISE penalizes large errors more heavily due to the squared term, making it useful for minimizing overshoot and oscillations in the system response.
 
-      
+    The Integral of Time-weighted Absolute Error (ITAE) is another performance metric, defined as:
+    \[
+    \text{ITAE} = \int_0^\infty t |e(t)| \, dt
+    \]
+    Unlike ISE, ITAE penalizes errors that persist over time, encouraging faster convergence and smoother responses. ITAE is particularly useful for optimizing controllers in systems where stability and rapid settling are critical.
 
+    To optimize the PID controller parameters, the derivative gain (\( K_d \)) was fixed at the ITAE value of \( K_d = 1.56006 \), while the proportional gain (\( K_c \)) and integral time (\( \tau_I \)) were varied. The system was simulated for a step change of \(-5\%\) moisture, and the Integral Squared Error (ISE) was calculated for each combination of \( K_c \) and \( \tau_I \).
+
+    Figure \ref{fig:figure2_4a} shows the contour plot of ISE values versus \( K_c \) and \( \tau_I \). The plot reveals a clear region of optimal performance, where the ISE is minimized. The optimal parameters were identified as:
+    \[
+    K_c = -1.2, \quad \tau_I = 7.5
+    \]
+    These values correspond to the lowest ISE, indicating the best controller performance in terms of minimizing overshoot, oscillations, and settling time.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure2-4a.png}
+      \caption{Contour Plot of ISE Values for Range of \( K_c \) and \( \tau_I \)}
+      \label{fig:figure2_4a}
+    \end{figure}
+
+    The system was simulated with the optimal controller and compared to other designs, including Cohen-Coon, Ciancone, ITAE, and Bode controllers. Figure \ref{fig:figure2_4b} shows the step responses for all controllers.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure2-4b.png}
+      \caption{Contour Plot of ISE Values for Range of \( K_c \) and \( \tau_I \)}
+      \label{fig:figure2_4b}
+    \end{figure}
+
+    The results can be summarized as follows:
+    \begin{itemize}
+        \item \textbf{Cohen-Coon Controller:} The Cohen-Coon controller exhibits a sharp and aggressive response, with a steep initial decrease and a larger negative overshoot. This behavior is likely due to the high values of \( K_p \) and \( K_d \). Additionally, the Cohen-Coon controller takes the longest time to converge, stabilizing after approximately 70 hours.
+        \item \textbf{Ciancone Controller:} The Ciancone controller produces an overdamped response, with slower convergence compared to the ITAE and Bode controllers. However, it stabilizes faster than the Cohen-Coon controller, taking approximately 40 hours to converge.
+        \item \textbf{ITAE Controller:} The ITAE controller demonstrates smooth and stable performance, with minimal overshoot and faster convergence compared to the Cohen-Coon and Ciancone controllers. It is well-suited for systems requiring rapid settling and stability.
+        \item \textbf{Bode Controller:} The Bode controller exhibits a similar shape to the ITAE controller but has slightly more overshoot and oscillations. While it converges quickly, it is less stable than the ITAE controller.
+        \item \textbf{Optimal Controller:} The optimal controller, with \( K_c = -1.2 \) and \( \tau_I = 7.5 \), achieves the lowest ISE and provides the smoothest response. It balances speed, stability, and minimal overshoot, making it the best choice among the designs.
+    \end{itemize}
 
     
 
