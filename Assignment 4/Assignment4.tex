@@ -179,7 +179,7 @@ Baoze Lin, Hady Ibrahim
     For the graphs \( K_c K_p \), \( \frac{\tau_I}{\theta + \tau} \), and \( \frac{K_D}{\theta + \tau} \), we get the values 0.73, 0.73, and 0.08 respectively. Solving for \( K_c \), \( \tau_I \), and \( K_D \) gives us:
 
     $$
-      K_C = \frac{0.73}{-1.2} = -6.083 \quad \quad \quad \quad \quad
+      K_C = \frac{0.73}{-1.2} = -0.683 \quad \quad \quad \quad \quad
       \tau_I = \left(5 + 6\right) \cdot 0.73 = 8.03 \quad \quad \quad \quad \quad
       K_D = \left(5 + 6\right) \cdot 0.08 = 0.88 \\
     $$
@@ -256,7 +256,7 @@ Baoze Lin, Hady Ibrahim
     We then calculate the PID parameters $K_c$, $\tau_I$ and $K_D$ using the Ziegler-Nichols tuning rules.
 
     \[
-    K_c = \frac{K_u}{1.7} = \frac{2.537}{1.7}\approx 1.492
+    K_c = \frac{-K_u}{1.7} = \frac{-2.537}{1.7}\approx -1.492
     \]
 
     \[
@@ -267,7 +267,54 @@ Baoze Lin, Hady Ibrahim
     K_D = \frac{T_u}{8} = \frac{13.445}{8} \approx 1.6806
     \]
 
+    % 2.3
+    \item
+    Looking at the Figure \ref{fig:figure2_3a} and Figure \ref{fig:figure2_3e}, the Cohen-Coon controller exhibits a more aggressive and sharp transition. Its initial decrease is steeper and reaches a larger negative value compared to the other controllers. This behavior is likely due to the high values of $K_p$ and $K_d$ within the controller. Additionally, the Cohen-Coon controller takes the longest time to converge, requiring close to 70 hours to stabilize.
 
+    In contrast, the Ciancone controller Figure \ref{fig:figure2_3b} produces an output that resembles an overdamped response. While it is slower to converge compared to the ITAE and Ziegler-Nichols controllers, it is still faster than the Cohen-Coon controller, stabilizing in approximately 40 hours.
+
+    The ITAE controller (Figure \ref{fig:figure2_3c}) stands out for its faster convergence and smaller overshoot compared to the other designs. Its response is smooth and stable, making it an efficient choice. 
+    
+    The Ziegler-Nichols controller (Figure \ref{fig:figure2_3d})follows a similar shape to the ITAE controller but exhibits a greater overshoot and more pronounced oscillations.
+
+    Based on the analysis of all the graphs, the ITAE controller demonstrates the best overall performance among the four designs, offering a balance of speed, stability, and minimal overshoot.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure2-3a.png}
+      \caption{Step Response with Cohen-Coon Tuning}
+      \label{fig:figure2_3a}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure2-3b.png}
+      \caption{Step Response with Ciancone Tuning}
+      \label{fig:figure2_3b}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure2-3c.png}
+      \caption{Step Response with ITAE Tuning}
+      \label{fig:figure2_3c}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure2-3d.png}
+      \caption{Step Response with Ziegler-Nichols Tuning}
+      \label{fig:figure2_3d}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Figures/figure2-3e.png}
+      \caption{Comparison of Step Response with All Tuning}
+      \label{fig:figure2_3e}
+    \end{figure}
+
+  
 
       
 
